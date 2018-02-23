@@ -12,9 +12,27 @@ public class ClassPilha implements IPilha{
     
     private Object arrayObj[];
     private int t = -1;
+    private int FC;
     
-    public ClassPilha(int tamanho){
+    public ClassPilha(int tamanho, int FC){
         arrayObj = new Object[tamanho];
+        this.FC = FC;
+    }
+    
+    public Object[] resize(int FC){
+        Object temp[];
+        if(FC == 0){
+           temp = new Object[size()*2];
+           for(int i = 0; i < size(); i++)
+               temp[i] = arrayObj[i];
+           return temp;
+        }
+        else{
+           temp = new Object[size()+FC];
+           for(int i = 0; i < size(); i++)
+               temp[i] = arrayObj[i];
+           return temp;
+        }
     }
 
     @Override
@@ -45,6 +63,8 @@ public class ClassPilha implements IPilha{
 
     @Override
     public void push(Object o) {
+        if(t == arrayObj.length - 1)
+            arrayObj = resize(FC);
         arrayObj[++t] = o;
     }
     
