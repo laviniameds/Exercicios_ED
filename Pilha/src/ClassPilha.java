@@ -1,4 +1,3 @@
-1
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -20,27 +19,33 @@ public class ClassPilha implements IPilha{
 
     @Override
     public boolean isEmpty() {
-        
+        return t == -1;
     }
 
     @Override
     public int size() {
-        
+        return t+1;
     }
 
     @Override
-    public Object top(){
-        
+    public Object top() throws EPilhaVazia{
+        if(isEmpty())
+            throw new EPilhaVazia("Pilha vazia!");
+        else
+            return arrayObj[t];
     }
 
     @Override
-    public Object pop(){
-        
+    public Object pop() throws EPilhaVazia{
+        if(isEmpty())
+            throw new EPilhaVazia("Pilha vazia!");
+        else
+            return arrayObj[t--];
     }
 
     @Override
     public void push(Object o) {
-        
+        arrayObj[++t] = o;
     }
     
 }

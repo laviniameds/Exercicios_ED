@@ -9,7 +9,7 @@
  * @author lavinia
  */
 class EPilhaVazia extends Exception {
-    public EPilhaVazia() {
-        super("Pilha está vazia!");
+    public EPilhaVazia(String message) {
+        super(message);
     }
 }
