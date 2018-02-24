@@ -19,6 +19,10 @@ public class ClassPilha implements IPilha{
         this.FC = FC;
     }
     
+    public Object[] getPilha(){
+        return arrayObj;
+    }
+    
     public Object[] resize(int FC){
         Object temp[];
         if(FC == 0){
