@@ -23,7 +23,7 @@ public class ClassPilha implements IPilha{
         return arrayObj;
     }
     
-    public Object[] resize(int FC){
+    private Object[] resize(int FC){
         Object temp[];
         if(FC == 0){
            temp = new Object[size()*2];
