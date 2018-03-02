@@ -25,18 +25,16 @@ public class ClassPilha implements IPilha{
     
     private Object[] resize(int FC){
         Object temp[];
-        if(FC == 0){
-           temp = new Object[size()*2];
-           for(int i = 0; i < size(); i++)
-               temp[i] = arrayObj[i];
-           return temp;
-        }
-        else{
+        
+        if(FC == 0)
+           temp = new Object[size()*2];  
+        else
            temp = new Object[size()+FC];
-           for(int i = 0; i < size(); i++)
-               temp[i] = arrayObj[i];
-           return temp;
-        }
+        
+        for(int i = 0; i < size(); i++)
+            temp[i] = arrayObj[i];
+        
+        return temp;
     }
 
     @Override
