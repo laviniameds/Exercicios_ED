@@ -27,9 +27,9 @@ public class ClassPilha implements IPilha{
         Object temp[];
         
         if(FC == 0)
-           temp = new Object[size()*2];  
+           temp = new Object[size() * 2];  
         else
-           temp = new Object[size()+FC];
+           temp = new Object[size() + FC];
         
         for(int i = 0; i < size(); i++)
             temp[i] = arrayObj[i];
