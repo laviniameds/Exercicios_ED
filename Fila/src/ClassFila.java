@@ -13,6 +13,15 @@ public class ClassFila implements IFila{
     private int n, i, f, FC;
     private Object fila[];
     
+    public Object[] getFila(){
+        Object[] aux = new Object[n];
+        for(int k=0;k<n;k++){
+            aux[k] = fila[i];
+            i = (i + 1) % n;
+        }
+        return aux;
+    }
+    
     public ClassFila(int n, int FC){
         i=0;
         f=0;
@@ -24,14 +33,19 @@ public class ClassFila implements IFila{
     private Object[] resize(){
         Object aux[];
         if(FC == 0)
-            aux = new Object[n*2];
+            n *= 2;
         else
-            aux = new Object[n+FC];
+            n += FC;
         
-        for(int k=0;k<n;k++){
-            aux[k] = i;
-            i = (i + 1) % n;
+        aux = new Object[n];
+        
+        for(int k=0;k<fila.length;k++){
+            aux[k] = fila[i];
+            i = (i + 1) % fila.length;
         }
+        
+        i = 0;
+        f = fila.length-1;
         return aux;
     }
 
@@ -55,13 +69,11 @@ public class ClassFila implements IFila{
 
     @Override
     public void enfileirar(Object o) throws EFilaVazia{
-        if (tamanho() == (n - 1)){
+        if (tamanho() == (n - 1))
             fila = resize();
-        }          
-        else{
-            fila[f] = o;
-            f = (f + 1) % n; 
-        }
+                         
+        fila[f] = o;
+        f = (f + 1) % n;      
     }
 
     @Override
