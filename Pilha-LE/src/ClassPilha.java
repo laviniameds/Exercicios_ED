@@ -38,6 +38,7 @@ public class ClassPilha {
             aux = topo;
             topo = topo.getProximo();
             size--;
+            aux.getProximo().setElemento(null);
             return aux;
         }
     }

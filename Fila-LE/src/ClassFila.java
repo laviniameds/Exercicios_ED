@@ -56,6 +56,7 @@ public class ClassFila{
             aux = inicio;
             inicio = inicio.getProximo();           
             size--;
+            aux.getProximo().setElemento(null);
             
             return aux;
         }
