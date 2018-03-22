@@ -13,7 +13,11 @@ public class ClassSeq implements ISeq{
     private ClassArrayNo arrayNos[];
     private int t = -1;
     
-    private ClassArrayNo resize(){
+    public ClassSeq(int tamanho){
+        arrayNos = new ClassArrayNo[tamanho];       
+    }
+    
+    private ClassArrayNo[] resize(){
         
     }
 
@@ -29,12 +33,15 @@ public class ClassSeq implements ISeq{
 
     @Override
     public Object elemAtRank(int r) {
-        
+        return arrayNos[r].getElemento();
     }
 
     @Override
     public Object replaceAtRank(int r, Object o) {
+        Object aux = arrayNos[r].getElemento();
+        arrayNos[r].setElemento(o);
         
+        return aux;
     }
 
     @Override
@@ -42,6 +49,21 @@ public class ClassSeq implements ISeq{
         if (size() == arrayNos.length-1)
             arrayNos = resize();
         
+        ClassArrayNo no = new ClassArrayNo();
+        no.setElemento(o);
+        no.setIndice(r);
+        
+        ClassArrayNo aux;
+                
+        for(int i = r; i <= t+1; i++){
+            aux = arrayNos[i];
+            arrayNos[i] = no;
+            no = aux;
+            
+            if(no != null)
+                no.setIndice(i+1);
+        } 
+        t++;        
     }
 
     @Override
@@ -74,8 +96,9 @@ public class ClassSeq implements ISeq{
         int rank = rankOf(n);
         
         if(rank != -1){
-            Object aux = arrayNos[rank].getElemento();
+            Object aux = arrayNos[rank].getElemento();           
             arrayNos[rank].setElemento(o);
+            arrayNos[rank].setIndice(rank);
         
             return aux;
         }
@@ -83,7 +106,7 @@ public class ClassSeq implements ISeq{
     }
 
     @Override
-    public Object swapElements(ClassArrayNo n, ClassArrayNo q) {
+    public void swapElements(ClassArrayNo n, ClassArrayNo q) {
         
     }
 

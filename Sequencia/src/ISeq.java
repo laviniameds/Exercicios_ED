@@ -22,7 +22,7 @@ public interface ISeq {
     public Object before(ClassArrayNo n);
     public Object after(ClassArrayNo n);
     public Object replaceElement(ClassArrayNo n, Object o);
-    public Object swapElements(ClassArrayNo n, ClassArrayNo q);
+    public void swapElements(ClassArrayNo n, ClassArrayNo q);
     public Object insertBefore(ClassArrayNo n, Object o);
     public Object insertAfter(ClassArrayNo n, Object o);
     public Object insertFirst(Object o);
@@ -30,5 +30,5 @@ public interface ISeq {
     public Object remove(ClassArrayNo n);
     
     public ClassArrayNo atRank(int r);
-    public Object rankOf(ClassArrayNo n);    
+    public int rankOf(ClassArrayNo n);    
 }
