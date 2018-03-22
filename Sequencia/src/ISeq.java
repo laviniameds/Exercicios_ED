@@ -14,7 +14,7 @@ public interface ISeq {
     public boolean isEmpty();
     public Object elemAtRank(int r);
     public Object replaceAtRank(int r, Object o);
-    public void insertAtRank(int r, Object o);
+    public Object insertAtRank(int r, Object o);
     public Object removeAtRank(int r);
     
     public Object first();
