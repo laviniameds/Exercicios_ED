@@ -19,16 +19,16 @@ public interface ISeq {
     
     public Object first();
     public Object last();
-    public Object before(ClassNo n);
-    public Object after(ClassNo n);
-    public Object replaceElement(ClassNo n, Object o);
-    public Object swapElements(ClassNo n, ClassNo q);
-    public Object insertBefore(ClassNo n, Object o);
-    public Object insertAfter(ClassNo n, Object o);
+    public Object before(ClassArrayNo n);
+    public Object after(ClassArrayNo n);
+    public Object replaceElement(ClassArrayNo n, Object o);
+    public Object swapElements(ClassArrayNo n, ClassArrayNo q);
+    public Object insertBefore(ClassArrayNo n, Object o);
+    public Object insertAfter(ClassArrayNo n, Object o);
     public Object insertFirst(Object o);
     public Object insertLast(Object o);
-    public Object remove(ClassNo n);
+    public Object remove(ClassArrayNo n);
     
-    public ClassNo atRank(int r);
-    public Object rankOf(ClassNo n);    
+    public ClassArrayNo atRank(int r);
+    public Object rankOf(ClassArrayNo n);    
 }

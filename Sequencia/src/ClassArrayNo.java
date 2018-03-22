@@ -8,24 +8,25 @@
  *
  * @author lavinia
  */
-public class ClassNo {
+public class ClassArrayNo {
+    private int indice;
     private Object elemento;
-    private ClassNo proximo;
-    
+
+    public int getIndice() {
+        return indice;
+    }
+
+    public void setIndice(int indice) {
+        this.indice = indice;
+    }
+
     public Object getElemento() {
         return elemento;
     }
-    
-    public void setElemento(Object o){
-        elemento = o;
+
+    public void setElemento(Object elemento) {
+        this.elemento = elemento;
     }
     
-    public void setProximo(ClassNo o){
-        proximo = o;
-    }
-    
-    public ClassNo getProximo() {
-        return proximo;
-    }
     
 }

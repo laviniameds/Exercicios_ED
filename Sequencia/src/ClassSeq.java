@@ -10,17 +10,21 @@
  */
 public class ClassSeq implements ISeq{
     
-    private Object arrayNos[];
-    private int n, i, f, FC;
+    private ClassArrayNo arrayNos[];
+    private int t = -1;
+    
+    private ClassArrayNo resize(){
+        
+    }
 
     @Override
     public int size() {
-        return (n - i + f) % n;
+        return t-1;
     }
 
     @Override
     public boolean isEmpty() {
-        return (i == f);
+        return (t == -1);
     }
 
     @Override
@@ -35,6 +39,8 @@ public class ClassSeq implements ISeq{
 
     @Override
     public void insertAtRank(int r, Object o) {
+        if (size() == arrayNos.length-1)
+            arrayNos = resize();
         
     }
 
@@ -54,32 +60,40 @@ public class ClassSeq implements ISeq{
     }
 
     @Override
-    public Object before(ClassNo n) {
+    public Object before(ClassArrayNo n) {
         
     }
 
     @Override
-    public Object after(ClassNo n) {
+    public Object after(ClassArrayNo n) {
         
     }
 
     @Override
-    public Object replaceElement(ClassNo n, Object o) {
+    public Object replaceElement(ClassArrayNo n, Object o) {
+        int rank = rankOf(n);
+        
+        if(rank != -1){
+            Object aux = arrayNos[rank].getElemento();
+            arrayNos[rank].setElemento(o);
+        
+            return aux;
+        }
+        return null;    
+    }
+
+    @Override
+    public Object swapElements(ClassArrayNo n, ClassArrayNo q) {
         
     }
 
     @Override
-    public Object swapElements(ClassNo n, ClassNo q) {
+    public Object insertBefore(ClassArrayNo n, Object o) {
         
     }
 
     @Override
-    public Object insertBefore(ClassNo n, Object o) {
-        
-    }
-
-    @Override
-    public Object insertAfter(ClassNo n, Object o) {
+    public Object insertAfter(ClassArrayNo n, Object o) {
         
     }
 
@@ -94,19 +108,22 @@ public class ClassSeq implements ISeq{
     }
 
     @Override
-    public Object remove(ClassNo n) {
+    public Object remove(ClassArrayNo n) {
        
     }
 
     @Override
-    public ClassNo atRank(int r) {
-        
-        
+    public ClassArrayNo atRank(int r) {
+        return arrayNos[r];       
     }
 
     @Override
-    public Object rankOf(ClassNo n) {
-        
+    public int rankOf(ClassArrayNo n) {
+        for(ClassArrayNo no:arrayNos){
+            if(n.getElemento() == no.getElemento())
+                return no.getIndice();
+        }
+        return -1;
     }
     
     
