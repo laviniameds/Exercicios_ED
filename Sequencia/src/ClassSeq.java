@@ -22,8 +22,10 @@ public class ClassSeq implements ISeq{
               
         temp = new ClassArrayNo[size() * 2];  
         
-        for(int i = 0; i < size(); i++)
-            temp[i] = arrayNos[i];
+        for(int i = 0; i <= size(); i++){
+            temp[i].setElemento(arrayNos[i].getElemento());
+            temp[i].setIndice(i);
+        }
         
         return temp;
     }
