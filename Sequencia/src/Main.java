@@ -15,7 +15,7 @@ public class Main {
     public static void exibirSeq(ClassSeq sequencia, int size){
         System.out.print("\nSequencia: \n");
         
-        for(int i = 0; i < size; i++)
+        for(int i = 0; i <= size+1; i++)
             if(sequencia.atRank(i).getElemento() != null)
                 System.out.print(sequencia.atRank(i).getElemento() + " ");  
         
@@ -51,24 +51,24 @@ public class Main {
                 case 3:
                     rank = sc.nextInt();
                     System.out.println("elemento: " + sequencia.elemAtRank(rank));
-                    exibirSeq(sequencia, tamanho);
+                    exibirSeq(sequencia, sequencia.size());
                     break;
                 case 4:
                     rank = sc.nextInt();
                     obj = sc.nextInt();
                     sequencia.replaceAtRank(rank, obj);
-                    exibirSeq(sequencia, tamanho);
+                    exibirSeq(sequencia, sequencia.size());
                     break;                
                 case 5:
                     rank = sc.nextInt();
                     obj = sc.nextInt();
                     sequencia.insertAtRank(rank, obj);
-                    exibirSeq(sequencia, tamanho);
+                    exibirSeq(sequencia, sequencia.size());
                     break;               
                 case 6:
                     rank = sc.nextInt();
                     sequencia.removeAtRank(rank);
-                    exibirSeq(sequencia, tamanho);
+                    exibirSeq(sequencia, sequencia.size());
                     break;                                                                                 
                 case 7:
                     System.out.println("primeiro: " + sequencia.first());
@@ -88,40 +88,40 @@ public class Main {
                     rank = sc.nextInt();
                     obj = sc.nextInt();
                     sequencia.replaceElement(sequencia.atRank(rank), obj);
-                    exibirSeq(sequencia, tamanho);
+                    exibirSeq(sequencia, sequencia.size());
                     break;                                                                           
                 case 12:
                     rank = sc.nextInt();
                     rank2 = sc.nextInt();
                     sequencia.swapElements(sequencia.atRank(rank), sequencia.atRank(rank2));
-                    exibirSeq(sequencia, tamanho);
+                    exibirSeq(sequencia, sequencia.size());;
                     break;                                                                          
                 case 13:
                     rank = sc.nextInt();
                     obj = sc.nextInt();
                     sequencia.insertBefore(sequencia.atRank(rank), obj);
-                    exibirSeq(sequencia, tamanho);
+                    exibirSeq(sequencia, sequencia.size());
                     break;                                                                           
                 case 14:
                     rank = sc.nextInt();
                     obj = sc.nextInt();
                     sequencia.insertAfter(sequencia.atRank(rank), obj);
-                    exibirSeq(sequencia, tamanho);
+                    exibirSeq(sequencia, sequencia.size());
                     break;                                                                          
                 case 15:
                     obj = sc.nextInt();
                     sequencia.insertFirst(obj);
-                    exibirSeq(sequencia, tamanho);
+                    exibirSeq(sequencia, sequencia.size());
                     break;                                                                          
                 case 16:
                     obj = sc.nextInt();
                     sequencia.insertLast(obj);
-                    exibirSeq(sequencia, tamanho);
+                    exibirSeq(sequencia, sequencia.size());
                     break;                                                                           
                 case 17:
                     rank = sc.nextInt();
                     sequencia.remove(sequencia.atRank(rank));
-                    exibirSeq(sequencia, tamanho);
+                    exibirSeq(sequencia, sequencia.size());
                     break;                                                                                                                                                  
                 default:
                     break;
