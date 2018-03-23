@@ -121,12 +121,14 @@ public class ClassSeq implements ISeq{
     public void swapElements(ClassArrayNo n, ClassArrayNo q) {
         int rankQ = rankOf(q);
         int rankN = rankOf(n);
+        Object que = q.getElemento();
+        Object no = n.getElemento();
         
-        atRank(rankN).setElemento(q.getElemento());
-        atRank(rankN).setIndice(q.getIndice());
+        atRank(rankN).setElemento(que);
+        atRank(rankN).setIndice(rankN);
         
-        atRank(rankQ).setElemento(n.getElemento());
-        atRank(rankQ).setIndice(n.getIndice());
+        atRank(rankQ).setElemento(no);
+        atRank(rankQ).setIndice(rankQ);
     }
 
     @Override

@@ -98,7 +98,7 @@ public class Main {
                     break;                                                                          
                 case 13:
                     rank = sc.nextInt();
-                    obj = sc.nextInt();
+                    obj = sc.nextLine();
                     sequencia.insertBefore(sequencia.atRank(rank), obj);
                     exibirSeq(sequencia, sequencia.size());
                     break;                                                                           
@@ -110,7 +110,7 @@ public class Main {
                     break;                                                                          
                 case 15:
                     obj = sc.nextInt();
-                    sequencia.insertFirst(obj);
+                    sequencia.insertFirst(obj).toString();
                     exibirSeq(sequencia, sequencia.size());
                     break;                                                                          
                 case 16:
