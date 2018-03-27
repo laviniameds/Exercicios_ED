@@ -20,10 +20,10 @@ public class ClassSeq implements ISeq{
     private ClassArrayNo[] resize(){
         ClassArrayNo temp[];
               
-        temp = new ClassArrayNo[size() * 2];  
+        temp = new ClassArrayNo[arrayNos.length * 2];  
         
-        for(int i = 0; i <= size(); i++){
-            temp[i].setElemento(arrayNos[i].getElemento());
+        for(int i = 0; i < size(); i++){
+            temp[i] = arrayNos[i];
             temp[i].setIndice(i);
         }
         
@@ -32,7 +32,7 @@ public class ClassSeq implements ISeq{
 
     @Override
     public int size() {
-        return t-1;
+        return t+1;
     } 
 
     @Override
@@ -55,7 +55,7 @@ public class ClassSeq implements ISeq{
 
     @Override
     public Object insertAtRank(int r, Object o) {
-        if (size() == arrayNos.length-1)
+        if (t == arrayNos.length-2)
             arrayNos = resize();
         
         ClassArrayNo no = new ClassArrayNo();
@@ -80,8 +80,10 @@ public class ClassSeq implements ISeq{
     public Object removeAtRank(int r) {
         Object aux = arrayNos[r].getElemento();
         
-        for(int i = r;i < size(); i++)
-            arrayNos[i] = arrayNos[i++];                  
+        for(int i = r;i < size()-1; i++){
+            arrayNos[i] = arrayNos[i+1];
+            arrayNos[i].setIndice(i+1);
+        }                  
         
         t--;
         return aux;
@@ -124,11 +126,10 @@ public class ClassSeq implements ISeq{
         Object que = q.getElemento();
         Object no = n.getElemento();
         
-        atRank(rankN).setElemento(que);
-        atRank(rankN).setIndice(rankN);
+        arrayNos[rankN].setElemento(que);
+           
+        arrayNos[rankQ].setElemento(no);
         
-        atRank(rankQ).setElemento(no);
-        atRank(rankQ).setIndice(rankQ);
     }
 
     @Override
@@ -148,7 +149,7 @@ public class ClassSeq implements ISeq{
 
     @Override
     public Object insertLast(Object o) {
-        return insertAtRank(t, o); 
+        return insertAtRank(t+1, o); 
     }
 
     @Override
@@ -169,6 +170,4 @@ public class ClassSeq implements ISeq{
         }
         return -1;
     }
-    
-    
 }

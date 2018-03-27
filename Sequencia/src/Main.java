@@ -15,7 +15,7 @@ public class Main {
     public static void exibirSeq(ClassSeq sequencia, int size){
         System.out.print("\nSequencia: \n");
         
-        for(int i = 0; i <= size+1; i++)
+        for(int i = 0; i < size; i++)
             if(sequencia.atRank(i).getElemento() != null)
                 System.out.print(sequencia.atRank(i).getElemento() + " ");  
         
