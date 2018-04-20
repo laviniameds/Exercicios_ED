@@ -17,8 +17,5 @@ public interface Tree {
     public boolean isInternal(Position p);
     public boolean isRoot(Position p);
     public Object replace(Position p,Object o);
-    
-    
-    
-    
+    public Object remove(Position v) throws InvalidPositionException;  
 }

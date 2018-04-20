@@ -9,15 +9,12 @@ public class NodeBT implements Position{
     private Object element;
     private NodeBT parent,left,right;
    
-
     //coloquei o costrutor com apenas esses dois atributos
     public NodeBT(Object element, NodeBT parent) {
         this.element = element;
-        this.parent = parent;
-        
+        this.parent = parent;      
     }
     
-
     @Override
     public Object getElement() {
         return element;
@@ -51,9 +48,5 @@ public class NodeBT implements Position{
     public void setRight(NodeBT right) {
         this.right = right;
     }
-    
-  
-    
-    
     
 }

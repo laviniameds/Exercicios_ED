@@ -1,11 +1,11 @@
 package binaria;
 
-
 import interfaces.InvalidPositionException;
 import interfaces.Position;
 import interfaces.BinaryTree;
 import java.util.Iterator;
 import java.util.ArrayList;
+import java.util.Vector;
 
 
 public class ClassBT implements BinaryTree{
@@ -19,40 +19,39 @@ public class ClassBT implements BinaryTree{
 
     @Override
      public NodeBT left(NodeBT no) throws InvalidPositionException {
-        if(hasLeft(no)){
-            return no.getLeft();
-        }
+        if(hasLeft(no))
+            return no.getLeft();      
         else
             return null;
     }
 
-     @Override
-      public NodeBT insertLeft(NodeBT no,Object o) throws InvalidPositionException{
-          if(hasLeft(no)){
-              //lançar exceção se no já tiver um filho esquerdo
-          }
-          NodeBT n = new NodeBT(o,no);
-          no.setLeft(n);
-          size++;
-          return n;
-      }
-      @Override
-      public NodeBT insertRight(NodeBT no,Object o) throws InvalidPositionException{
-          if(hasRight(no)){
-              //lançar exceção se no já tiver um filho direita(bolsonaro)
-          }
-          NodeBT n = new NodeBT(o,no);
-          no.setRight(n);
-          size++;
-          return n;
-      }
+    @Override
+     public NodeBT insertLeft(NodeBT no,Object o) throws InvalidPositionException{
+         if(hasLeft(no))
+             throw new InvalidPositionException("Já tem nó esquerdo!");
+         
+         NodeBT n = new NodeBT(o,no);
+         no.setLeft(n);
+         size++;
+         return n;
+     }
+     
+    @Override
+    public NodeBT insertRight(NodeBT no,Object o) throws InvalidPositionException{
+        if(hasRight(no))
+            throw new InvalidPositionException("Já tem nó direito!");
+        
+        NodeBT n = new NodeBT(o,no);
+        no.setRight(n);
+        size++;
+        return n;
+    }
      
      
     @Override
     public NodeBT right(NodeBT no) throws InvalidPositionException {
-         if(hasRight(no)){
-            return no.getRight();
-        }
+         if(hasRight(no))
+            return no.getRight();       
         else
             return null;
     }
@@ -76,10 +75,12 @@ public class ClassBT implements BinaryTree{
     public int height(Position p) {
         NodeBT node = (NodeBT) p;
         int heightLeft;  
-        int heightRight;  
+        int heightRight; 
+        
         if(node!=null)  {  
             heightLeft = height(node.getLeft());  
             heightRight = height(node.getRight());   
+            
             if(heightLeft > heightRight)   
                 return (heightLeft+1);  
             else  
@@ -92,6 +93,7 @@ public class ClassBT implements BinaryTree{
     @Override
     public int depth(Position p) {
         NodeBT node = (NodeBT) p;
+        
         if(isRoot(node))
             return 0;
         else
@@ -100,14 +102,27 @@ public class ClassBT implements BinaryTree{
 
     @Override
     //return sempre false, pois não se pode remover a raiz segundo as informações do prof
-    public boolean isEmpty() {
-        
+    public boolean isEmpty() {       
        return false;
     }
 
     @Override
     public Iterator elements() {
-        //falta implementar
+        Vector v = new Vector();
+        v = getVectorElements(v, root);
+        
+        return v.iterator();
+    }
+    
+    private Vector getVectorElements(Vector v, NodeBT no) {
+       
+        if (no != null) {
+            v.add(no.getElement());
+            getVectorElements(v, no.getLeft());
+            getVectorElements(v, no.getRight());
+        }
+        
+        return v;
     }
 
     @Override
@@ -164,10 +179,11 @@ public class ClassBT implements BinaryTree{
         node.setElement(o);
         return aux;   
     }
-   
-    
-  
 
+    @Override
+    public Object remove(Position v) throws InvalidPositionException {
+        
+    }   
    
     
 }
