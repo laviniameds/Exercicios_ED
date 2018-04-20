@@ -114,12 +114,12 @@ public class ClassBT implements BinaryTree{
         return v.iterator();
     }
     
-    private Vector getVectorElements(Vector v, NodeBT no) {
+    private Vector getVectorElements(Vector v, NodeBT node) {
        
-        if (no != null) {
-            v.add(no.getElement());
-            getVectorElements(v, no.getLeft());
-            getVectorElements(v, no.getRight());
+        if (node != null) {
+            v.add(node.getElement());
+            getVectorElements(v, node.getLeft());
+            getVectorElements(v, node.getRight());
         }
         
         return v;
@@ -127,7 +127,21 @@ public class ClassBT implements BinaryTree{
 
     @Override
     public Iterator nos() {
-       //falta implementar
+        Vector v = new Vector();
+        v = getVectorNos(v, root);
+        
+        return v.iterator();
+    }
+    
+    private Vector getVectorNos(Vector v, NodeBT node) {
+       
+        if (node != null) {
+            v.add(node);
+            getVectorElements(v, node.getLeft());
+            getVectorElements(v, node.getRight());
+        }
+        
+        return v;
     }
 
     @Override
@@ -181,9 +195,25 @@ public class ClassBT implements BinaryTree{
     }
 
     @Override
-    public Object remove(Position v) throws InvalidPositionException {
+    public Object remove(Position p) throws InvalidPositionException {
+        NodeBT node = (NodeBT) p;
+        Object o = removeLower(node).getElement();
+        size--;
         
-    }   
+        return o;
+    }
+    
+    private NodeBT removeLower(NodeBT node) throws InvalidPositionException{
+        if (node == null) {
+            return root;
+        } 
+        else if (node.getLeft() != null) {
+            node.setLeft(removeLower(node.getLeft()));
+            return node;
+        } 
+        else
+            return node.getRight();
+    }
    
     
 }
