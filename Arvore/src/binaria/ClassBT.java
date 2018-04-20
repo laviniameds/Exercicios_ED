@@ -126,14 +126,11 @@ public class ClassBT implements BinaryTree{
     }
 
     @Override
-    public Iterator nos() {
-        Vector v = new Vector();
-        v = getVectorNos(v, root);
-        
-        return v.iterator();
+    public Iterator nos() {        
+        return children(root);
     }
     
-    private Vector getVectorNos(Vector v, NodeBT node) {
+    /*private Vector getVectorNos(Vector v, NodeBT node) {
        
         if (node != null) {
             v.add(node);
@@ -142,10 +139,10 @@ public class ClassBT implements BinaryTree{
         }
         
         return v;
-    }
+    }*/
 
     @Override
-    public Position root() {
+    public NodeBT root() {
        return root;
     }
 
@@ -192,6 +189,15 @@ public class ClassBT implements BinaryTree{
         Object aux = node.getElement();
         node.setElement(o);
         return aux;   
+    }
+    
+    public NodeBT insert(Object o, NodeBT no) throws InvalidPositionException{        
+        if (!hasLeft(no))
+            no.setLeft(insert(o, no.getLeft()));
+        else 
+            no.setRight(insert(o, no.getRight()));
+        
+        return no;
     }
 
     @Override
