@@ -9,6 +9,7 @@ import interfaces.GenericTree;
 import interfaces.InvalidPositionException;
 import interfaces.Position;
 import java.util.Iterator;
+import java.util.Vector;
 
 /**
  *
@@ -37,6 +38,16 @@ public class ClassGT implements GenericTree{
     @Override
     public Object search(Position p) throws InvalidPositionException {
         
+    }
+    
+    @Override
+    public Object replace(Position p, Object o) {
+        
+    }
+
+    @Override
+    public void swapElements(Position p1, Position p2) throws InvalidPositionException {
+    
     }
 
     @Override
@@ -67,7 +78,7 @@ public class ClassGT implements GenericTree{
     @Override
     public int depth(Position p) {
         NodeGT no = (NodeGT) p;
-        return depth(no);
+        return profundidade(no);
     }
     
     private int profundidade(NodeGT no){
@@ -84,12 +95,38 @@ public class ClassGT implements GenericTree{
 
     @Override
     public Iterator elements() {
+        Vector v = new Vector();
+        return getElements(v, root).iterator();
+    }
+    
+    public Vector getElements(Vector v, NodeGT no){        
+        v.add(no.getElement());
         
+        Iterator<NodeGT> itr = no.children();
+        while(itr.hasNext()){
+            NodeGT n = itr.next();
+            getElements(v, n);
+        }
+        
+        return v;
     }
 
     @Override
     public Iterator nos() {
+        Vector v = new Vector();
+        return getNos(v, root).iterator();
+    }
+    
+    public Vector getNos(Vector v, NodeGT no){        
+        v.add(no);
         
+        Iterator<NodeGT> itr = no.children();
+        while(itr.hasNext()){
+            NodeGT n = itr.next();
+            getElements(v, n);
+        }
+        
+        return v;
     }
 
     @Override
@@ -124,11 +161,6 @@ public class ClassGT implements GenericTree{
     @Override
     public boolean isRoot(Position p) {
         return (p == root());
-    }
-
-    @Override
-    public Object replace(Position p, Object o) {
-        
     }
     
 }
