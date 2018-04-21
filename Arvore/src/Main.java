@@ -1,5 +1,5 @@
 
-import binaria.ClassBT;
+import binary.ClassBT;
 import interfaces.InvalidPositionException;
 
 /*

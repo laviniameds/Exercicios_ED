@@ -1,4 +1,4 @@
-package generica;
+package generic;
 
 import interfaces.Position;
 import java.util.Iterator;
@@ -41,7 +41,5 @@ public class NodeGT implements Position{
     public Iterator children(){
         return children.iterator();
     }
-    
-    
     
 }

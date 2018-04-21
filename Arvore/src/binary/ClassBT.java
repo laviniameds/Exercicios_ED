@@ -1,4 +1,4 @@
-package binaria;
+package binary;
 
 import interfaces.InvalidPositionException;
 import interfaces.Position;
