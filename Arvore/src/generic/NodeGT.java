@@ -13,6 +13,11 @@ public class NodeGT implements Position{
     private Object element;
     private Vector children = new Vector(); //Coleção com todos os filhos do nó
    
+    public NodeGT(NodeGT parent, Object element){
+        this.parent = parent;
+        this.element = element;
+    }
+    
     public Object getElement() {
       return element;
     }

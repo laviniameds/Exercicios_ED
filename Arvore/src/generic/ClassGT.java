@@ -16,7 +16,13 @@ import java.util.Iterator;
  */
 public class ClassGT implements GenericTree{
     
+    private NodeGT root;
+    private int size;
     
+    public ClassGT(Object o){
+        root = new NodeGT(null, o);
+        size = 1;
+    }
 
     @Override
     public void addChild(Position p, Object o) {
@@ -35,22 +41,45 @@ public class ClassGT implements GenericTree{
 
     @Override
     public int size() {
-        
+        return size;
     }
 
     @Override
     public int height(Position p) {
-        
+        NodeGT no = (NodeGT) p;
+        return altura(no);
+    }
+    
+    private int altura(NodeGT no){
+        if(isExternal(no))
+            return 0;
+        else {
+            Iterator<NodeGT> itr = no.children();
+            int h = 0;
+            while(itr.hasNext()){
+                NodeGT noChild = itr.next();
+                h = Math.max(h, altura(noChild));
+            }
+            return 1 + h;
+        }
     }
 
     @Override
     public int depth(Position p) {
-        
+        NodeGT no = (NodeGT) p;
+        return depth(no);
+    }
+    
+    private int profundidade(NodeGT no){
+        if (no == root)
+            return 0;
+        else
+            return 1 + profundidade(no.getParent());
     }
 
     @Override
     public boolean isEmpty() {
-        
+        return false;
     }
 
     @Override
@@ -65,32 +94,36 @@ public class ClassGT implements GenericTree{
 
     @Override
     public Position root() {
-        
+        return root;
     }
 
     @Override
     public Position parent(Position p) {
-        
+        NodeGT no = (NodeGT) p;
+        return no.getParent();
     }
 
     @Override
     public Iterator children(Position p) {
-    
+        NodeGT no = (NodeGT) p;
+        return no.children();
     }
 
     @Override
     public boolean isExternal(Position p) {
-        
+        NodeGT no = (NodeGT) p;
+        return (no.childrenNumber() == 0);  
     }
 
     @Override
     public boolean isInternal(Position p) {
-        
+        NodeGT no = (NodeGT) p;
+        return (no.childrenNumber() > 0);  
     }
 
     @Override
     public boolean isRoot(Position p) {
-        
+        return (p == root());
     }
 
     @Override
