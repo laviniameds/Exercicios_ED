@@ -32,6 +32,7 @@ public class ClassBT implements BinaryTree{
          
          NodeBT n = new NodeBT(o,no);
          no.setLeft(n);
+         n.setParent(no);
          size++;
          return n;
      }
