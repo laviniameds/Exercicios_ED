@@ -10,6 +10,8 @@ import interfaces.InvalidPositionException;
 import interfaces.Position;
 import java.util.Iterator;
 import java.util.Vector;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -27,27 +29,56 @@ public class ClassGT implements GenericTree{
 
     @Override
     public void addChild(Position p, Object o) {
-        
+        NodeGT no = (NodeGT) p;
+        NodeGT noFilho = new NodeGT(no, o);
+        no.addChild(noFilho);
+        size++;
     }
 
     @Override
     public Object remove(Position p) throws InvalidPositionException {
-        
+        NodeGT no = (NodeGT) p;
+        NodeGT father = no.getParent();
+        if (father != null || isExternal(no))
+            father.removeChild(no);
+        else
+            throw new InvalidPositionException("Nó inválido!");
+        Object o = no.getElement();
+        no = null;
+        size--;
+        return o;
     }
 
     @Override
     public Object search(Position p) throws InvalidPositionException {
+        Iterator<NodeGT> itr = nos();
         
+        while(itr.hasNext()){
+            NodeGT no = itr.next();          
+            if(no.getElement().equals(p))
+                return no;
+        }
+        return null;
     }
     
     @Override
     public Object replace(Position p, Object o) {
-        
+        NodeGT no = (NodeGT) p;
+        Object aux = no.getElement();
+        no.setElement(o);
+        return aux;
     }
 
     @Override
     public void swapElements(Position p1, Position p2) throws InvalidPositionException {
-    
+        NodeGT no1 = (NodeGT)p1;
+        NodeGT no2 = (NodeGT)p2;
+        
+        Object o1 = no1.getElement();
+        Object o2 = no2.getElement();
+        
+        no1.setElement(o2);
+        no2.setElement(o1);
     }
 
     @Override

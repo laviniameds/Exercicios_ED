@@ -35,8 +35,11 @@ public class NodeGT implements Position{
     }
     
     public void addChild(NodeGT n){
-        children.add(n);
-        
+        children.add(n);      
+    }
+    
+    public void removeChild(NodeGT n){
+        children.remove(n);      
     }
     
     public int childrenNumber(){
