@@ -1,8 +1,6 @@
 
 package interfaces;
 
-import generic.NodeGT;
-
 /**
  *
  * @author lucas

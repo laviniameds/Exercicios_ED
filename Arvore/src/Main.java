@@ -19,24 +19,23 @@ public class Main {
     
     public static void main(String[] args) throws InvalidPositionException{
         
-        ClassGT gt = new ClassGT("a");
+        ClassGT gt = new ClassGT(1);
         
         Position r = gt.root();
         NodeGT root = (NodeGT)gt.root();
         
-        gt.add(r,"b");
-        gt.add(r,"c");
-        gt.add(r,"d");
+        gt.add(r,2);
+        gt.add(r,3);
+        gt.add(r,4);
         
         
-        gt.add(gt.search("b"),"e");
-        gt.add(gt.search("b"),"f");
-        gt.add(gt.search("b"),"g"); 
+        gt.add(gt.search(2),5);
+        gt.add(gt.search(2),6);
+        gt.add(gt.search(2),7); 
         
         gt.printTree(root,"",true);
         
-        gt.remove(gt.search("e"));
-        gt.add(gt.search("c"),"f");
+        gt.remove(gt.search(7));
         
         System.out.println("\n\n");
         gt.printTree(root,"",true);

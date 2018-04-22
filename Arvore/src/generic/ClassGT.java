@@ -51,10 +51,8 @@ public class ClassGT implements GenericTree{
         NodeGT no = (NodeGT) p;
         NodeGT father = no.getParent();
         Object o = no.getElement();
-        if (father != null || isExternal(no)){
-            father.removeChild(no);
-            no = null;
-        }
+        if (father != null || isExternal(no))
+            father.removeChild(no);      
         else
             throw new InvalidPositionException("Nó inválido!");
         size--;
@@ -63,8 +61,8 @@ public class ClassGT implements GenericTree{
 
     @Override
     public Position search(Object o) throws InvalidPositionException {
-        Iterator itr = root.children();
-        
+        Iterator itr = nos();
+                
         while(itr.hasNext()){
             NodeGT no = (NodeGT)itr.next();          
             if(no.getElement().equals(o))
@@ -139,16 +137,20 @@ public class ClassGT implements GenericTree{
     @Override
     public Iterator elements() {
         Vector v = new Vector();
-        return getElements(v, root).iterator();
+        return getElements(v, root()).iterator();
     }
     
-    public Vector getElements(Vector v, NodeGT no){        
+    public Vector getElements(Vector v, Position p){        
+        NodeGT no = (NodeGT)p;
         v.add(no.getElement());
         
-        Iterator itr = no.children();
-        while(itr.hasNext()){
-            NodeGT n = (NodeGT)itr.next();
-            getElements(v, n);
+        if (isInternal(no)) {
+            Iterator itr = no.children();
+            while (itr.hasNext()) {
+                NodeGT NoChild = (NodeGT) itr.next();
+                Vector childs = getElements(v, NoChild);
+                v.addAll(childs);
+            }
         }
         
         return v;
@@ -157,16 +159,20 @@ public class ClassGT implements GenericTree{
     @Override
     public Iterator nos() {
         Vector v = new Vector();
-        return getNos(v, root).iterator();
+        return getNos(v, root()).iterator();
     }
     
-    public Vector getNos(Vector v, NodeGT no){        
+    public Vector getNos(Vector v, Position p){ 
+        NodeGT no = (NodeGT)p;
         v.add(no);
         
-        Iterator itr = no.children();
-        while(itr.hasNext()){
-            NodeGT n = (NodeGT)itr.next();
-            getElements(v, n);
+        if (isInternal(no)) {
+            Iterator itr = no.children();
+            while (itr.hasNext()) {
+                NodeGT NoChild = (NodeGT) itr.next();
+                Vector childs = getNos(v, NoChild);
+                v.addAll(childs);
+            }
         }
         
         return v;
