@@ -26,9 +26,20 @@ public class ClassGT implements GenericTree{
         root = new NodeGT(null, o);
         size = 1;
     }
+    
+    public void printTree(NodeGT no, String indent, Boolean last){
+        System.out.println(indent + "+- " + no.getElement());
+        indent += last ? "   " : "|  ";
+                
+        Iterator itr = no.children();
+        while(itr.hasNext()){
+            NodeGT n = (NodeGT)itr.next();
+            printTree(n, indent, itr.hasNext());
+        }
+    }
 
     @Override
-    public void addChild(Position p, Object o) {
+    public void add(Position p, Object o) {
         NodeGT no = (NodeGT) p;
         NodeGT noFilho = new NodeGT(no, o);
         no.addChild(noFilho);
@@ -39,23 +50,24 @@ public class ClassGT implements GenericTree{
     public Object remove(Position p) throws InvalidPositionException {
         NodeGT no = (NodeGT) p;
         NodeGT father = no.getParent();
-        if (father != null || isExternal(no))
+        Object o = no.getElement();
+        if (father != null || isExternal(no)){
             father.removeChild(no);
+            no = null;
+        }
         else
             throw new InvalidPositionException("Nó inválido!");
-        Object o = no.getElement();
-        no = null;
         size--;
         return o;
     }
 
     @Override
-    public Object search(Position p) throws InvalidPositionException {
-        Iterator<NodeGT> itr = nos();
+    public Position search(Object o) throws InvalidPositionException {
+        Iterator itr = root.children();
         
         while(itr.hasNext()){
-            NodeGT no = itr.next();          
-            if(no.getElement().equals(p))
+            NodeGT no = (NodeGT)itr.next();          
+            if(no.getElement().equals(o))
                 return no;
         }
         return null;
@@ -96,10 +108,10 @@ public class ClassGT implements GenericTree{
         if(isExternal(no))
             return 0;
         else {
-            Iterator<NodeGT> itr = no.children();
+            Iterator itr = no.children();
             int h = 0;
             while(itr.hasNext()){
-                NodeGT noChild = itr.next();
+                NodeGT noChild = (NodeGT)itr.next();
                 h = Math.max(h, altura(noChild));
             }
             return 1 + h;
@@ -133,9 +145,9 @@ public class ClassGT implements GenericTree{
     public Vector getElements(Vector v, NodeGT no){        
         v.add(no.getElement());
         
-        Iterator<NodeGT> itr = no.children();
+        Iterator itr = no.children();
         while(itr.hasNext()){
-            NodeGT n = itr.next();
+            NodeGT n = (NodeGT)itr.next();
             getElements(v, n);
         }
         
@@ -151,9 +163,9 @@ public class ClassGT implements GenericTree{
     public Vector getNos(Vector v, NodeGT no){        
         v.add(no);
         
-        Iterator<NodeGT> itr = no.children();
+        Iterator itr = no.children();
         while(itr.hasNext()){
-            NodeGT n = itr.next();
+            NodeGT n = (NodeGT)itr.next();
             getElements(v, n);
         }
         
