@@ -37,7 +37,17 @@ public class Main {
         
         gt.remove(gt.search(7));
         
-        System.out.println("\n\n");
+        System.out.println("\n");
+        gt.printTree(root,"",true);
+        
+        gt.replace(gt.search(6), 25);
+        
+        System.out.println("\n");
+        gt.printTree(root,"",true);
+        
+        gt.swapElements(gt.search(25), gt.search(3));
+        
+        System.out.println("\n");
         gt.printTree(root,"",true);
     }
 }

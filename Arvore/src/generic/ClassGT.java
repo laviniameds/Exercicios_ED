@@ -51,11 +51,12 @@ public class ClassGT implements GenericTree{
         NodeGT no = (NodeGT) p;
         NodeGT father = no.getParent();
         Object o = no.getElement();
-        if (father != null || isExternal(no))
+        if (father != null && isExternal(no))
             father.removeChild(no);      
         else
             throw new InvalidPositionException("Nó inválido!");
         size--;
+        no = null;
         return o;
     }
 
