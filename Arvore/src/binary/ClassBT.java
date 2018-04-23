@@ -128,7 +128,7 @@ public class ClassBT implements BinaryTree{
 
     @Override
     public Iterator nos() {        
-        return children(root);
+        
     }
     
     /*private Vector getVectorNos(Vector v, NodeBT node) {
@@ -159,10 +159,10 @@ public class ClassBT implements BinaryTree{
         if(isExternal(node))
             return null;
         else{
-            ArrayList<NodeBT> children = new ArrayList<NodeBT>();
+            Vector children = new Vector();
             children.add(node.getLeft());
             children.add(node.getRight());
-            return (Iterator) children;
+            return children.iterator();
         }
     }
 
