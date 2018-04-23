@@ -19,6 +19,10 @@ public class Main {
     
     public static void main(String[] args) throws InvalidPositionException{
         
+        /*
+        
+        TESTE ARVORE GENERICA
+
         ClassGT gt = new ClassGT(1);
         
         Position r = gt.root();
@@ -49,5 +53,15 @@ public class Main {
         
         System.out.println("\n");
         gt.printTree(root,"",true);
+        
+        */
+        
+        /*
+        
+        TESTE ARVORE BINARIA DE BUSCA(ARRAY)
+        
+        */
+        
+        
     }
 }
