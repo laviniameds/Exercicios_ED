@@ -62,20 +62,14 @@ public class ClassBTArray implements BinaryTree{
     @Override
     public int height(Position p) {
         NodeBT node = (NodeBT) p;
-        int heightLeft;  
-        int heightRight; 
-        
-        if(node!=null)  {  
-            heightLeft = height(node.getLeft());  
-            heightRight = height(node.getRight());   
-            
-            if(heightLeft > heightRight)   
-                return (heightLeft+1);  
-            else  
-                return (heightRight+1);  
-        }  
-        else  
-            return 0;
+        int l = height(node.getLeft());
+        int r = height(node.getRight());
+
+        if (l > r) {
+            return l + 1;
+        } else {
+            return r + 1;
+        }
     }
 
     @Override
@@ -155,22 +149,34 @@ public class ClassBTArray implements BinaryTree{
     }
 
     @Override
-    public void add(Position p1, Object o) {
+    public void add(int key, Object o) {
+        NodeBT no = insertRec(array[0], key);
+        no.setElement(o);
+        array[size++] = no;
+    }
+    
+    public NodeBT insertRec(NodeBT root, int key) {
+
+        if (root == null) {
+            root = new NodeBT(key, null, root);
+            return root;
+        }
+
+        if (key < root.getKey())
+            root.setLeft(insertRec(root.getLeft(), key));
+        else if (key > root.getKey())
+            root.setRight(insertRec(root.getRight(), key));
+ 
+        return root;
+    }
+
+    @Override
+    public Object remove(int key) throws InvalidPositionException {
         
     }
 
     @Override
-    public Object remove(Position p1) throws InvalidPositionException {
-        
-    }
-
-    @Override
-    public void swapElements(Position p1, Position p2) throws InvalidPositionException {
-        
-    }
-
-    @Override
-    public Position search(Object o) throws InvalidPositionException {
+    public int search(Object o) throws InvalidPositionException {
         
     }
     
