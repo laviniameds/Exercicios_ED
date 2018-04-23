@@ -25,31 +25,31 @@ public class ClassBT implements BinaryTree{
             return null;
     }
 
-    @Override
-     public NodeBT insertLeft(NodeBT no,Object o) throws InvalidPositionException{
+    
+     public NodeBT insertLeft(NodeBT no,Object o,int key) throws InvalidPositionException{
          if(hasLeft(no))
              throw new InvalidPositionException("Já tem nó esquerdo!");
          
-         NodeBT n = new NodeBT(o,no);
+         NodeBT n = new NodeBT(key,o,no);
          no.setLeft(n);
          n.setParent(no);
          size++;
          return n;
      }
      
-    @Override
-    public NodeBT insertRight(NodeBT no,Object o) throws InvalidPositionException{
+   
+    public NodeBT insertRight(NodeBT no,Object o, int key) throws InvalidPositionException{
         if(hasRight(no))
             throw new InvalidPositionException("Já tem nó direito!");
         
-        NodeBT n = new NodeBT(o,no);
+        NodeBT n = new NodeBT(key,o,no);
         no.setRight(n);
         size++;
         return n;
     }
      
      
-    @Override
+    
     public NodeBT getRight(NodeBT no) throws InvalidPositionException {
          if(hasRight(no))
             return no.getRight();       
@@ -192,10 +192,13 @@ public class ClassBT implements BinaryTree{
         return aux;   
     }
     
-    public NodeBT insert(Object o, int key) throws InvalidPositionException{        
-           NodeBT node = (NodeBT) search(key,root);
-           node.setElement(o);
-           return node;  
+  
+    public NodeBT insert(Object o, int key,Position p) throws InvalidPositionException{        
+          NodeBT node = (NodeBT) search(key,(NodeBT) p);
+          if(key == node.getKey())//significa que o nodo é interno nesse caso faz uma chamada recursiva para o filho e insere
+              return insert(o,key,node.getLeft());
+          insertAtExternal(node,o);
+          return node;
     }
 
     @Override
@@ -221,10 +224,7 @@ public class ClassBT implements BinaryTree{
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
-    @Override
-    public void add(Position p1, Object o) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+    
     //Para o root como primeiro nodo
     public Position search(int key,Position p) throws InvalidPositionException {
         NodeBT node = (NodeBT) p;  
@@ -238,7 +238,14 @@ public class ClassBT implements BinaryTree{
             return search(key,node.getRight());
         
     }
-    //método para criar os dois nós externos que não possuem elemento
+    
+    private void insertAtExternal(NodeBT node,Object o){
+        node.setLeft(null);
+        node.setRight(null);
+        node.setElement(o);
+        size++;
+    }
+    
    
    
 
@@ -251,6 +258,22 @@ public class ClassBT implements BinaryTree{
         node2.setElement(aux);
         
     }
+
+    @Override
+    public void add(Position p1, Object o) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public Position search(Object o) throws InvalidPositionException {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    
+
+    
+
+    
    
     
 }
