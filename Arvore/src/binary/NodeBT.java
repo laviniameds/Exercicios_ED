@@ -20,6 +20,10 @@ public class NodeBT implements Position{
     public Object getElement() {
         return this.element;
     }
+    
+    public void setElement(Object element){
+        this.element = element;
+    }
 
     public int getKey() {
         return key;

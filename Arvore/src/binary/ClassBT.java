@@ -88,7 +88,7 @@ public class ClassBT implements BinaryTree{
                 return (heightRight+1);  
         }  
         else  
-        return 0;
+            return 0;
     }
 
     @Override
@@ -192,22 +192,16 @@ public class ClassBT implements BinaryTree{
         return aux;   
     }
     
-    public NodeBT insert(Object o, NodeBT no) throws InvalidPositionException{        
-        if (!hasLeft(no))
-            no.setLeft(insert(o, no.getLeft()));
-        else 
-            no.setRight(insert(o, no.getRight()));
-        
-        return no;
+    public NodeBT insert(Object o, int key) throws InvalidPositionException{        
+           NodeBT node = (NodeBT) search(key,root);
+           node.setElement(o);
+           return node;  
     }
 
     @Override
     public Object remove(Position p) throws InvalidPositionException {
-        NodeBT node = (NodeBT) p;
-        Object o = removeLower(node).getElement();
-        size--;
-        
-        return o;
+       
+        return null;
     }
     
     private NodeBT removeLower(NodeBT node) throws InvalidPositionException{
@@ -226,20 +220,36 @@ public class ClassBT implements BinaryTree{
     public NodeBT getSibling(NodeBT no) throws InvalidPositionException {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-
+    
     @Override
     public void add(Position p1, Object o) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-
-    @Override
-    public Position search(Position p1) throws InvalidPositionException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    //Para o root como primeiro nodo
+    public Position search(int key,Position p) throws InvalidPositionException {
+        NodeBT node = (NodeBT) p;  
+        if(isExternal(node))
+            return node;
+        if(key < node.getKey())
+            return search(key,node.getLeft());
+        else if(key == node.getKey())
+            return node;
+       else
+            return search(key,node.getRight());
+        
     }
+    //método para criar os dois nós externos que não possuem elemento
+   
+   
 
     @Override
     public void swapElements(Position p1, Position p2) throws InvalidPositionException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        NodeBT node1 = (NodeBT) p1;
+        NodeBT node2 = (NodeBT) p2;
+        Object aux = node1.getElement();
+        node1.setElement(node2.getElement());
+        node2.setElement(aux);
+        
     }
    
     
