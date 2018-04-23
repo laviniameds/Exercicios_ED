@@ -17,9 +17,4 @@ public interface Tree {
     public boolean isInternal(Position p);
     public boolean isRoot(Position p);
     public Object replace(Position p,Object o); 
-    
-    public void add(Position p1, Object o);
-    public Object remove(Position p1) throws InvalidPositionException;
-    public Position search(Object o) throws InvalidPositionException;
-    public void swapElements(Position p1, Position p2) throws InvalidPositionException;
 }

@@ -200,12 +200,6 @@ public class ClassBT implements BinaryTree{
           insertAtExternal(node,o);
           return node;
     }
-
-    @Override
-    public Object remove(Position p) throws InvalidPositionException {
-       
-        return null;
-    }
     
     private NodeBT removeLower(NodeBT node) throws InvalidPositionException{
         if (node == null) {
@@ -239,41 +233,22 @@ public class ClassBT implements BinaryTree{
         
     }
     
+    //?? n entendi esse metodo
     private void insertAtExternal(NodeBT node,Object o){
         node.setLeft(null);
         node.setRight(null);
         node.setElement(o);
         size++;
     }
-    
-   
-   
 
     @Override
-    public void swapElements(Position p1, Position p2) throws InvalidPositionException {
-        NodeBT node1 = (NodeBT) p1;
-        NodeBT node2 = (NodeBT) p2;
-        Object aux = node1.getElement();
-        node1.setElement(node2.getElement());
-        node2.setElement(aux);
+    public void add(int key, Object o) {
         
     }
 
     @Override
-    public void add(Position p1, Object o) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public Position search(Object o) throws InvalidPositionException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    
-
-    
-
-    
-   
+    public Object remove(int key) throws InvalidPositionException {
+        
+    } 
     
 }

@@ -8,4 +8,8 @@ public interface BinaryTree extends Tree {
     public NodeBT getSibling(NodeBT no) throws InvalidPositionException;
     public boolean hasLeft(NodeBT no) throws InvalidPositionException;
     public boolean hasRight(NodeBT no) throws InvalidPositionException;
+    
+    public void add(int key, Object o);
+    public Object remove(int key) throws InvalidPositionException;
+    public int search(Object o) throws InvalidPositionException;
 }
