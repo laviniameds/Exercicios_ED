@@ -11,6 +11,9 @@ import java.util.Vector;
 public class ClassBT implements BinaryTree{
     NodeBT root;
     int size;
+    ArrayList<NodeBT> nodesPost = new ArrayList<NodeBT>();
+    ArrayList<NodeBT> nodesPre = new ArrayList<NodeBT>();
+    ArrayList<NodeBT> nodesIn = new ArrayList<NodeBT>();
     
     public ClassBT(int key, Object o){
         root = new NodeBT(key, o, null);
@@ -128,7 +131,7 @@ public class ClassBT implements BinaryTree{
 
     @Override
     public Iterator nos() {        
-        
+        return children(root);
     }
     
     /*private Vector getVectorNos(Vector v, NodeBT node) {
@@ -159,10 +162,10 @@ public class ClassBT implements BinaryTree{
         if(isExternal(node))
             return null;
         else{
-            Vector children = new Vector();
+            ArrayList<NodeBT> children = new ArrayList<NodeBT>();
             children.add(node.getLeft());
             children.add(node.getRight());
-            return children.iterator();
+            return (Iterator) children;
         }
     }
 
@@ -200,6 +203,11 @@ public class ClassBT implements BinaryTree{
           insertAtExternal(node,o);
           return node;
     }
+
+    @Override
+    public Object remove(Position p) throws InvalidPositionException {
+        return null;
+    }
     
     private NodeBT removeLower(NodeBT node) throws InvalidPositionException{
         if (node == null) {
@@ -218,7 +226,10 @@ public class ClassBT implements BinaryTree{
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
-    
+    @Override
+    public void add(Position p1, Object o) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
     //Para o root como primeiro nodo
     public Position search(int key,Position p) throws InvalidPositionException {
         NodeBT node = (NodeBT) p;  
@@ -233,22 +244,68 @@ public class ClassBT implements BinaryTree{
         
     }
     
-    //?? n entendi esse metodo
     private void insertAtExternal(NodeBT node,Object o){
         node.setLeft(null);
         node.setRight(null);
         node.setElement(o);
         size++;
     }
-
+    
     @Override
-    public void add(int key, Object o) {
+    public void swapElements(Position p1, Position p2) throws InvalidPositionException {
+        NodeBT node1 = (NodeBT) p1;
+        NodeBT node2 = (NodeBT) p2;
+        Object aux = node1.getElement();
+        node1.setElement(node2.getElement());
+        node2.setElement(aux);
         
     }
+    
+    public Iterator posOrder(Position p){
 
-    @Override
-    public Object remove(int key) throws InvalidPositionException {
-        
-    } 
+        NodeBT node = (NodeBT) p;
+        if(node.getLeft() != null){
+            posOrder(node.getLeft());
+        }
+        if(node.getRight() != null)
+            posOrder(node.getRight());
+        nodesPost.add(node);
+        return nodesPost.iterator();
+    }
+    
+    
+    public Iterator preOrder(Position p){
+        NodeBT node = (NodeBT) p;
+        nodesPre.add(node);
+        if(node.getLeft() != null)
+            preOrder(node.getLeft());
+        if(node.getRight()!=null)
+            preOrder(node.getRight());
+        return nodesPre.iterator();
+    }
+    
+    public Iterator inOrder(Position p){
+        NodeBT node = (NodeBT) p;
+        if(isInternal(node)){
+            inOrder(node.getLeft());
+            nodesIn.add(node);
+        }
+        else if(node != null){
+            nodesIn.add(node);
+        }
+        if(isInternal(node)){
+            inOrder(node.getRight());
+        }
+        return nodesIn.iterator();
+       
+       
+    }
+
+    
+
+    
+
+    
+   
     
 }
