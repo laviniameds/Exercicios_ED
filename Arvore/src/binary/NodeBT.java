@@ -6,22 +6,27 @@ import java.util.Vector;
 
 
 public class NodeBT implements Position{
+    private int key;
     private Object element;
     private NodeBT parent,left,right;
    
-    //coloquei o costrutor com apenas esses dois atributos
-    public NodeBT(Object element, NodeBT parent) {
+    public NodeBT(int key, Object element, NodeBT parent) {
+        this.key = key;
         this.element = element;
         this.parent = parent;      
     }
-    
+
     @Override
     public Object getElement() {
-        return element;
+        return this.element;
     }
 
-    public void setElement(Object element) {
-        this.element = element;
+    public int getKey() {
+        return key;
+    }
+
+    public void setKey(int key) {
+        this.key = key;
     }
 
     public NodeBT getParent() {
@@ -38,7 +43,6 @@ public class NodeBT implements Position{
 
     public void setLeft(NodeBT left) {
         this.left = left;
-        
     }
 
     public NodeBT getRight() {
@@ -48,5 +52,6 @@ public class NodeBT implements Position{
     public void setRight(NodeBT right) {
         this.right = right;
     }
+    
     
 }

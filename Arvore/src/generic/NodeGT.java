@@ -18,8 +18,9 @@ public class NodeGT implements Position{
         this.element = element;
     }
     
+    @Override
     public Object getElement() {
-      return element;
+        return this.element;
     }
     
     public void setElement(Object element){

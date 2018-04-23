@@ -12,13 +12,13 @@ public class ClassBT implements BinaryTree{
     NodeBT root;
     int size;
     
-    public ClassBT(Object o){
-        root = new NodeBT(o,null);
+    public ClassBT(int key, Object o){
+        root = new NodeBT(key, o, null);
         size = 1;
     }
 
     @Override
-     public NodeBT left(NodeBT no) throws InvalidPositionException {
+     public NodeBT getLeft(NodeBT no) throws InvalidPositionException {
         if(hasLeft(no))
             return no.getLeft();      
         else
@@ -50,7 +50,7 @@ public class ClassBT implements BinaryTree{
      
      
     @Override
-    public NodeBT right(NodeBT no) throws InvalidPositionException {
+    public NodeBT getRight(NodeBT no) throws InvalidPositionException {
          if(hasRight(no))
             return no.getRight();       
         else
@@ -220,6 +220,26 @@ public class ClassBT implements BinaryTree{
         } 
         else
             return node.getRight();
+    }
+
+    @Override
+    public NodeBT getSibling(NodeBT no) throws InvalidPositionException {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void add(Position p1, Object o) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public Position search(Position p1) throws InvalidPositionException {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void swapElements(Position p1, Position p2) throws InvalidPositionException {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
    
     
