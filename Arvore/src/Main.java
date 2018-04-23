@@ -1,4 +1,6 @@
 
+import binary.ClassBTArray;
+import binary.NodeBT;
 import generic.ClassGT;
 import generic.NodeGT;
 import interfaces.InvalidPositionException;
@@ -62,6 +64,13 @@ public class Main {
         
         */
         
+        ClassBTArray btA = new ClassBTArray("eae", 50);
+        NodeBT root = (NodeBT)btA.root();
         
+        btA.add(5, "opa");
+        btA.add(2, "aaa");
+        btA.add(1, "ccc");
+        
+        btA.printTree(root, "", true);
     }
 }

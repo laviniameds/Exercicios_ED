@@ -5,7 +5,6 @@
  */
 package binary;
 
-import generic.NodeGT;
 import interfaces.BinaryTree;
 import interfaces.InvalidPositionException;
 import interfaces.Position;
@@ -20,17 +19,6 @@ public class ClassBTArray implements BinaryTree{
     
     private NodeBT[] array;
     private int size = 0;
-    
-    public void printTree(NodeGT no, String indent, Boolean last){
-        System.out.println(indent + "+- " + no.getElement());
-        indent += last ? "   " : "|  ";
-                
-        Iterator itr = no.children();
-        while(itr.hasNext()){
-            NodeGT n = (NodeGT)itr.next();
-            printTree(n, indent, itr.hasNext());
-        }
-    }
     
     public ClassBTArray(Object o, int tam){
         array = new NodeBT[tam];
