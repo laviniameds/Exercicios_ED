@@ -6,6 +6,8 @@ import interfaces.BinaryTree;
 import java.util.Iterator;
 import java.util.ArrayList;
 import java.util.Vector;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 
 public class ClassBT implements BinaryTree{
@@ -205,7 +207,7 @@ public class ClassBT implements BinaryTree{
     }
 
     @Override
-    public Object remove(Position p) throws InvalidPositionException {
+    public Object remove(int key) throws InvalidPositionException {
         return null;
     }
     
@@ -227,12 +229,28 @@ public class ClassBT implements BinaryTree{
     }
     
     @Override
-    public void add(Position p1, Object o) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public void add(int key, Object o) throws InvalidPositionException {
+        NodeBT node = new NodeBT(key,o,null);
+        NodeBT node2 = (NodeBT) search(key,root());
+        if(key == node2.getKey()){
+           throw new InvalidPositionException("Posição inválida");
+        }
+        else if(key<node2.getKey()){
+            node2.setLeft(node);
+            node.setParent(node2);
+            size++;
+        }
+        
+        else{
+            node2.setRight(node);
+            node.setParent(node2);
+            size++;
+        }
+       
     }
     //Para o root como primeiro nodo
     public Position search(int key,Position p) throws InvalidPositionException {
-        NodeBT node = (NodeBT) p;  
+        NodeBT node = (NodeBT) p;
         if(isExternal(node))
             return node;
         if(key < node.getKey())
@@ -241,7 +259,7 @@ public class ClassBT implements BinaryTree{
             return node;
        else
             return search(key,node.getRight());
-        
+      
     }
     
     private void insertAtExternal(NodeBT node,Object o){
@@ -251,7 +269,7 @@ public class ClassBT implements BinaryTree{
         size++;
     }
     
-    @Override
+    
     public void swapElements(Position p1, Position p2) throws InvalidPositionException {
         NodeBT node1 = (NodeBT) p1;
         NodeBT node2 = (NodeBT) p2;
@@ -299,6 +317,40 @@ public class ClassBT implements BinaryTree{
         return nodesIn.iterator();
        
        
+    }
+    
+    
+    public String toString () {
+        Iterator itr = inOrder(root); //Organiza Inorder e joga no iterador em seguida calcula a altura da arvore e adicina 5
+        int h = height(root) + 5;
+        int l = size() + 5;
+        
+        Object matrix[][] = new Object[h][l]; //matriz da altura pelo tamanho
+        
+        int i = 0;
+        while (itr.hasNext()) {
+            NodeBT n = (NodeBT) itr.next();
+            int d = this.depth(n);
+            matrix[d][i] = n.getElement();
+            i++;
+        }
+        
+        String str = "";
+        
+        for (i = 0; i < h; i++){
+            for (int j = 0; j < l; j++) {//Abreviação de if e else
+                str += matrix[i][j] == null ? "  " : ((int) matrix[i][j] >= 0 ? " " + matrix[i][j] : matrix[i][j]);
+            }
+            str += "\n";
+        }
+        
+        return str;
+    }
+
+    @Override
+    public int search(Object o) throws InvalidPositionException {
+       //só pra a classe parar de dar erro, o search ta implementado diferente
+       return 0;
     }
 
     

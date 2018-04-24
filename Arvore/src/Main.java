@@ -1,4 +1,5 @@
 
+import binary.ClassBT;
 import binary.ClassBTArray;
 import binary.NodeBT;
 import generic.ClassGT;
@@ -64,13 +65,18 @@ public class Main {
         
         */
         
-        ClassBTArray btA = new ClassBTArray("eae", 50);
+        /*ClassBTArray btA = new ClassBTArray("eae", 50);
         NodeBT root = (NodeBT)btA.root();
         
         btA.add(5, "opa");
         btA.add(2, "aaa");
         btA.add(1, "ccc");
-        
-        btA.printTree(root, "", true);
+        */
+      // btA.printTree(root, "", true);
+      
+      ClassBT bt = new ClassBT(10,"primeiro");
+      System.out.println(bt.toString());
+      
+      
     }
 }
