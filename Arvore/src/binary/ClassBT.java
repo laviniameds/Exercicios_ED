@@ -18,8 +18,8 @@ public class ClassBT implements BinaryTree{
     ArrayList<NodeBT> nodesIn = new ArrayList<NodeBT>();
     
     public ClassBT(int key, Object o){
-        root = new NodeBT(key, o, null);
-        size = 1;
+        root = null;
+        size = 0;
     }
 
     @Override
@@ -79,6 +79,8 @@ public class ClassBT implements BinaryTree{
 
     @Override
     public int height(Position p) {
+        if(root == null)
+            return 0;
         NodeBT node = (NodeBT) p;
         int heightLeft;  
         int heightRight; 
@@ -107,49 +109,39 @@ public class ClassBT implements BinaryTree{
     }
 
     @Override
-    //return sempre false, pois não se pode remover a raiz segundo as informações do prof
+   
     public boolean isEmpty() {       
-       return false;
+       return root == null;
     }
 
     @Override
     public Iterator elements() {
-        Vector v = new Vector();
-        v = getVectorElements(v, root);
-        
-        return v.iterator();
+        if(isEmpty())
+            return null;
+        ArrayList<Object> elements = new ArrayList<Object>();
+        Iterator nodes = inOrder(root);
+        while(nodes.hasNext()){
+            NodeBT node = (NodeBT) nodes.next();
+            elements.add(node.getElement());
+        }
+        return elements.iterator();
     }
     
-    private Vector getVectorElements(Vector v, NodeBT node) {
-       
-        if (node != null) {
-            v.add(node.getElement());
-            getVectorElements(v, node.getLeft());
-            getVectorElements(v, node.getRight());
-        }
-        
-        return v;
-    }
-
     @Override
-    public Iterator nos() {        
-        return children(root);
+    public Iterator nos() {   
+        if(root == null)
+            return null;
+        else
+            return inOrder(root);
     }
-    
-    /*private Vector getVectorNos(Vector v, NodeBT node) {
-       
-        if (node != null) {
-            v.add(node);
-            getVectorElements(v, node.getLeft());
-            getVectorElements(v, node.getRight());
-        }
-        
-        return v;
-    }*/
 
     @Override
     public NodeBT root() {
        return root;
+    }
+    
+    public void setRoot(NodeBT root){
+        this.root = root;
     }
 
     @Override
@@ -198,13 +190,22 @@ public class ClassBT implements BinaryTree{
     }
     
   
-    public NodeBT insert(Object o, int key,Position p) throws InvalidPositionException{        
-          NodeBT node = (NodeBT) search(key,(NodeBT) p);
+    public NodeBT insert(Object o, int key,Position p) throws InvalidPositionException{
+        NodeBT node;  
+        if(isEmpty()){
+              node = new NodeBT(key,o,null);
+              setRoot(node);
+              size++;
+          }
+          else{
+          node = (NodeBT) search(key,(NodeBT) p);
           if(key == node.getKey())//significa que o nodo é interno nesse caso faz uma chamada recursiva para o filho e insere
               return insert(o,key,node.getLeft());
           insertAtExternal(node,o);
+          size++;
+          }
           return node;
-    }
+        }
 
     @Override
     public Object remove(int key) throws InvalidPositionException {
@@ -225,7 +226,16 @@ public class ClassBT implements BinaryTree{
 
     @Override
     public NodeBT getSibling(NodeBT no) throws InvalidPositionException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        if(isEmpty()){
+            throw new InvalidPositionException("ávore vazia.");
+        }
+        NodeBT node = no.getParent();
+        NodeBT nodeAux = null;
+        if(node.getLeft()==no)
+            nodeAux = node.getRight();
+        else if(node.getRight()==no)
+            nodeAux =  node.getLeft();
+        return nodeAux;
     }
     
     @Override
