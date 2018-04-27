@@ -11,5 +11,5 @@ public interface BinaryTree extends Tree {
     
     public void add(int key, Object o)throws InvalidPositionException;
     public Object remove(int key) throws InvalidPositionException;
-    public int search(Object o) throws InvalidPositionException;
+    //public Position search(int key, Position p);
 }

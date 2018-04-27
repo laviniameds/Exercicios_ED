@@ -307,7 +307,8 @@ public class ClassBT implements BinaryTree{
        
     }
     //Para o root como primeiro nodo
-    public Position search(int key,Position p) throws InvalidPositionException {
+
+    public Position search(int key,Position p){
         NodeBT node = (NodeBT) p;
         if(isExternal(node))
             return node;
@@ -372,8 +373,7 @@ public class ClassBT implements BinaryTree{
         if(isInternal(node)){
             inOrder(node.getRight());
         }
-        return nodesIn.iterator();
-       
+        return nodesIn.iterator();    
        
     }
     
@@ -403,19 +403,7 @@ public class ClassBT implements BinaryTree{
         }
         
         return str;
-    }
-
-    @Override
-    public int search(Object o) throws InvalidPositionException {
-       //só pra a classe parar de dar erro, o search ta implementado diferente
-       return 0;
-    }
-
-    
-
-    
-
-    
-   
+    } 
+       
     
 }

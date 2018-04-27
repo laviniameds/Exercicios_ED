@@ -20,9 +20,10 @@ public class ClassBTArray implements BinaryTree{
     private NodeBT[] array;
     private int size = 0;
     
-    public ClassBTArray(Object o, int tam){
+    public ClassBTArray(int key, Object o, int tam){
         array = new NodeBT[tam];
         array[0] = new NodeBT(0, size, null);
+        array[1] = new NodeBT(key, o, null);
     }
 
     @Override
@@ -105,7 +106,7 @@ public class ClassBTArray implements BinaryTree{
 
     @Override
     public Position root() {
-        return array[0];
+        return array[1];
     }
 
     @Override
@@ -137,7 +138,7 @@ public class ClassBTArray implements BinaryTree{
     @Override
     public boolean isRoot(Position p) {
         NodeBT node = (NodeBT) p;
-        return array[0].getElement() == node.getElement();
+        return array[1].getElement() == node.getElement();
     }
 
     @Override
@@ -150,45 +151,65 @@ public class ClassBTArray implements BinaryTree{
 
     @Override
     public void add(int key, Object o) {
-        NodeBT no = insertRec(array[0], key);
+        NodeBT no = insert(key);
         no.setElement(o);
-        array[size++] = no;
     }
     
-    public NodeBT insertRec(NodeBT root, int key) {
-
-        if (root == null) {
-            root = new NodeBT(key, null, root);
-            return root;
+    public NodeBT insert(int key) {
+        
+        int i = 1;
+        
+        while(true){
+            if (array[i] == null){
+                array[i] = new NodeBT(key, null, null);
+                return array[i];
+            } 
+            else if (array[i].getKey() < key){
+                i = (2 * i + 2); 
+            }
+            else if (array[i].getKey() > key)
+                i = (2 * i + 1);           
         }
-
-        if (key < root.getKey())
-            root.setLeft(insertRec(root.getLeft(), key));
-        else if (key > root.getKey())
-            root.setRight(insertRec(root.getRight(), key));
- 
-        return root;
     }
 
     @Override
     public Object remove(int key) throws InvalidPositionException {
-        if(isExternal(array[key])){
-            Object aux = array[key].getElement();
-            array[key] = null;
-            return aux;  
-        }  
-        else
-            throw new InvalidPositionException("nó interno!");
+        
+        NodeBT no = (NodeBT)search(key);
+        
+        int i = 1;
+        
+        while(true){
+            if (array[i] == no){
+                array[i] = null;
+            } 
+            else if (array[i].getKey() < key){
+                i = (2 * i + 2); 
+            }
+            else if (array[i].getKey() > key)
+                i = (2 * i + 1);           
+        }
     }
 
-    @Override
-    public int search(Object o) throws InvalidPositionException {
-        for(int i=0;i<array.length;i++){
-          if(array[i].getElement() == o)
-              return i;
-          else throw new InvalidPositionException("nao achou");
+    public Position search(int key){        
+        int i = 1;
+        
+        while(i<array.length){
+            if(array[i].getKey() == key)
+                return array[i];
+            else if (array[i].getKey() < key){
+                i = (2 * i + 2); 
+            }
+            else if (array[i].getKey() > key)
+                i = (2 * i + 1);              
         }
-        return 0;
+        return null;
+    }
+    
+    public void printTree(){
+        int i = 1;
+        
+        
     }
     
 }
