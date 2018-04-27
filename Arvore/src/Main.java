@@ -74,7 +74,9 @@ public class Main {
         */
       // btA.printTree(root, "", true);
       
-      ClassBT bt = new ClassBT(10,"primeiro");
+      ClassBT bt = new ClassBT();
+      NodeBT root = new NodeBT(10,'5',null);
+      bt.setRoot(root);
       System.out.println(bt.toString());
       
       

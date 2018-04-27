@@ -17,7 +17,7 @@ public class ClassBT implements BinaryTree{
     ArrayList<NodeBT> nodesPre = new ArrayList<NodeBT>();
     ArrayList<NodeBT> nodesIn = new ArrayList<NodeBT>();
     
-    public ClassBT(int key, Object o){
+    public ClassBT(){
         root = null;
         size = 0;
     }
@@ -209,7 +209,55 @@ public class ClassBT implements BinaryTree{
 
     @Override
     public Object remove(int key) throws InvalidPositionException {
-        return null;
+        if( isEmpty()){
+            throw new InvalidPositionException("Ávore vazia");
+        }
+        NodeBT node = (NodeBT) search(key, root);
+        if(isRoot(node)){
+            throw new InvalidPositionException("Não é possível remover a raiz");
+         }
+        if(isExternal(node)){
+            if(node.getKey()<= node.getParent().getKey())
+                node.getParent().setLeft(null);
+            else
+                node.getParent().setRight(null);
+            
+        }
+        if(hasLeft(node) && !hasRight(node)){
+            if(node.getKey()<= node.getParent().getKey()){
+                node.getParent().setLeft(node.getLeft());
+                node.getLeft().setParent(node.getParent());
+            }
+            else{
+                node.getParent().setRight(node.getRight());
+                node.getRight().setParent(node.getRight());
+            }
+            size--;
+            return node;
+        }
+        if(!hasLeft(node) && hasRight(node)){
+            if(node.getKey()<= node.getParent().getKey()){
+                node.getParent().setLeft(node.getRight());
+                node.getRight().setParent(node.getParent());
+                
+            }
+            else{
+                node.getParent().setRight(node.getRight());
+                node.getRight().setParent(node.getParent());
+            }
+            size--;
+            return node;
+        }
+       NodeBT passer = node.getRight();
+        while (passer.getLeft() != null) 
+                passer = passer.getLeft();
+        
+        int auxKey = passer.getKey();
+        remove(auxKey);
+        node.setKey(auxKey);
+        size--;
+        return node;
+    
     }
     
     private NodeBT removeLower(NodeBT node) throws InvalidPositionException{
@@ -348,7 +396,7 @@ public class ClassBT implements BinaryTree{
         String str = "";
         
         for (i = 0; i < h; i++){
-            for (int j = 0; j < l; j++) {//Abreviação de if e else
+            for (int j = 0; j < l; j++) {
                 str += matrix[i][j] == null ? "  " : ((int) matrix[i][j] >= 0 ? " " + matrix[i][j] : matrix[i][j]);
             }
             str += "\n";
