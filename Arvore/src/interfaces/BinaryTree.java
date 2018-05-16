@@ -10,6 +10,6 @@ public interface BinaryTree extends Tree {
     public boolean hasRight(NodeBT no) throws InvalidPositionException;
     
     public void add(int key, Object o)throws InvalidPositionException;
-    public Object remove(int key) throws InvalidPositionException;
+    public Object remover(int key) throws InvalidPositionException;
     //public Position search(int key, Position p);
 }

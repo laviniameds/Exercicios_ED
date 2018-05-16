@@ -25,6 +25,7 @@ public class Main {
         /*
         
         TESTE ARVORE GENERICA
+        */
 
         ClassGT gt = new ClassGT(1);
         
@@ -57,7 +58,7 @@ public class Main {
         System.out.println("\n");
         gt.printTree(root,"",true);
         
-        */
+        
         
         /*
         
@@ -73,12 +74,7 @@ public class Main {
         btA.add(1, "ccc");
         */
       // btA.printTree(root, "", true);
-      
-      ClassBT bt = new ClassBT();
-      NodeBT root = new NodeBT(10,'5',null);
-      bt.setRoot(root);
-      System.out.println(bt.toString());
-      
+           
       
     }
 }

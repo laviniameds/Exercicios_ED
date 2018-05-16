@@ -15,7 +15,7 @@ import java.util.Vector;
  *
  * @author lavinia
  */
-public class ClassBTArray implements BinaryTree{
+public class ClassBTArray{
     
     private NodeBT[] array;
     private int size = 0;
@@ -26,17 +26,17 @@ public class ClassBTArray implements BinaryTree{
         array[1] = new NodeBT(key, o, null);
     }
 
-    @Override
+    
     public NodeBT getLeft(NodeBT no) throws InvalidPositionException {
         return no.getLeft();
     }
 
-    @Override
+    
     public NodeBT getRight(NodeBT no) throws InvalidPositionException {
         return no.getRight();
     }
 
-    @Override
+    
     public NodeBT getSibling(NodeBT no) throws InvalidPositionException {
         NodeBT father = no.getParent();
         if(father.getLeft().getElement().equals(no.getElement()))
@@ -45,22 +45,22 @@ public class ClassBTArray implements BinaryTree{
             return father.getLeft();
     }
 
-    @Override
+    
     public boolean hasLeft(NodeBT no) throws InvalidPositionException {
         return (no.getLeft() == null);
     }
 
-    @Override
+    
     public boolean hasRight(NodeBT no) throws InvalidPositionException {
         return (no.getRight()== null);
     }
 
-    @Override
+    
     public int size() {
         return size;
     }
 
-    @Override
+    
     public int height(Position p) {
         NodeBT node = (NodeBT) p;
         int l = height(node.getLeft());
@@ -73,7 +73,7 @@ public class ClassBTArray implements BinaryTree{
         }
     }
 
-    @Override
+    
     public int depth(Position p) {
         NodeBT node = (NodeBT) p;
         
@@ -83,12 +83,12 @@ public class ClassBTArray implements BinaryTree{
             return 1 + depth(node.getParent()); 
     }
 
-    @Override
+    
     public boolean isEmpty() {
         return false;
     }
 
-    @Override
+    
     public Iterator elements() {
         Vector v = new Vector();
         for(int i = 0;i<array.length;i++)
@@ -96,7 +96,7 @@ public class ClassBTArray implements BinaryTree{
         return v.iterator();  
     }
 
-    @Override
+    
     public Iterator nos() {
         Vector v = new Vector();
         for(int i = 0;i<array.length;i++)
@@ -104,18 +104,18 @@ public class ClassBTArray implements BinaryTree{
         return v.iterator();
     }
 
-    @Override
+    
     public Position root() {
         return array[1];
     }
 
-    @Override
+    
     public Position parent(Position p) {
         NodeBT no = (NodeBT)p;
         return array[no.getKey()].getParent();
     }
 
-    @Override
+    
     public Iterator children(Position p) {
         NodeBT no = (NodeBT)p;
         Vector v = new Vector();
@@ -124,24 +124,24 @@ public class ClassBTArray implements BinaryTree{
         return v.iterator();
     }
 
-    @Override
+    
     public boolean isExternal(Position p) {
         NodeBT node = (NodeBT) p;
         return array[node.getKey()+1] == null && array[node.getKey()+2] == null;
     }
 
-    @Override
+    
     public boolean isInternal(Position p) {
         return (!isExternal(p));
     }
 
-    @Override
+    
     public boolean isRoot(Position p) {
         NodeBT node = (NodeBT) p;
         return array[1].getElement() == node.getElement();
     }
 
-    @Override
+    
     public Object replace(Position p, Object o) {
         NodeBT node = (NodeBT) p;
         Object aux = node.getElement();
@@ -149,59 +149,120 @@ public class ClassBTArray implements BinaryTree{
         return aux;
     }
 
-    @Override
+    
     public void add(int key, Object o) {
         NodeBT no = insert(key);
+        
+        if(no.getKey() < no.getParent().getKey())
+            no.getParent().setLeft(no);       
+        else
+            no.getParent().setRight(no);
+        
         no.setElement(o);
     }
     
     public NodeBT insert(int key) {
         
         int i = 1;
+        int indexParent = 1;
         
         while(true){
             if (array[i] == null){
-                array[i] = new NodeBT(key, null, null);
+                array[i] = new NodeBT(key, null, array[indexParent]);
                 return array[i];
             } 
-            else if (array[i].getKey() < key){
-                i = (2 * i + 2); 
+            else if (key > array[i].getKey()){
+                indexParent = i;
+                i = (2 * i + 1); 
             }
-            else if (array[i].getKey() > key)
-                i = (2 * i + 1);           
+            else if (key < array[i].getKey())
+                indexParent = i;
+                i = (2 * i);           
         }
     }
+    
+    
+    private Object remover(int key) throws InvalidPositionException{
+        NodeBT no = search(key);
+        return remove(no, key);
+    }
 
-    @Override
-    public Object remove(int key) throws InvalidPositionException {
+  
+    public Object remove(NodeBT no, int key) throws InvalidPositionException {
+               
+        Object aux = new Object();     
+
+        if (isExternal(no)){
+            aux = no.getElement();
+            no = null;
+            return aux;
+        }       
+        if(hasLeft(no) && !hasRight(no)){
+            aux = no.getElement();
+            no.setElement(no.getLeft().getElement());
+            no.setLeft(null);
+            return aux;
+        }
+        else if(!hasLeft(no) && hasRight(no)){
+            aux = no.getElement();
+            no.setElement(no.getRight().getElement());
+            no.setRight(null);
+            return aux;
+        }
+        else{
+            NodeBT n = no.getRight();
+            while(n.getLeft() != null){
+                n = n.getLeft();
+            }
+            aux = n.getElement();
+            int intKey = n.getKey();
+            remove(n, intKey);
+            n.setElement(aux);
+            size--;
+            return aux; 
+        }
+               
         
-        NodeBT no = (NodeBT)search(key);
         
+        /*
         int i = 1;
         
-        while(true){
+        while(i<array.length){
+            if(no.getLeft() == null && no.getRight() == null){
+                if(no.getParent().getLeft() == no){
+                    no.getParent().setLeft(null);
+                }
+                else if(no.getParent().getRight() == no){
+                    no.getParent().setRight(null);
+                }               
+            }
+        }*/
+    
+        
+/*        while(true){
             if (array[i] == no){
                 array[i] = null;
             } 
             else if (array[i].getKey() < key){
-                i = (2 * i + 2); 
+                i = (2 * i + 1); 
             }
             else if (array[i].getKey() > key)
-                i = (2 * i + 1);           
+                i = (2 * i);           
         }
+*/
     }
 
-    public Position search(int key){        
+    public NodeBT search(int key){        
         int i = 1;
         
         while(i<array.length){
             if(array[i].getKey() == key)
                 return array[i];
             else if (array[i].getKey() < key){
-                i = (2 * i + 2); 
+                i = (2 * i + 1); 
             }
             else if (array[i].getKey() > key)
-                i = (2 * i + 1);              
+                i = (2 * i);              
         }
         return null;
     }
@@ -211,5 +272,6 @@ public class ClassBTArray implements BinaryTree{
         
         
     }
+
     
 }

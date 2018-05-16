@@ -1,5 +1,6 @@
 package binary;
 
+import generic.NodeGT;
 import interfaces.InvalidPositionException;
 import interfaces.Position;
 import interfaces.BinaryTree;
@@ -376,34 +377,18 @@ public class ClassBT implements BinaryTree{
         return nodesIn.iterator();    
        
     }
-    
-    
-    public String toString () {
-        Iterator itr = inOrder(root); //Organiza Inorder e joga no iterador em seguida calcula a altura da arvore e adicina 5
-        int h = height(root) + 5;
-        int l = size() + 5;
+   
         
-        Object matrix[][] = new Object[h][l]; //matriz da altura pelo tamanho
-        
-        int i = 0;
-        while (itr.hasNext()) {
-            NodeBT n = (NodeBT) itr.next();
-            int d = this.depth(n);
-            matrix[d][i] = n.getElement();
-            i++;
+    public void printTree(NodeBT no, String indent, Boolean last){
+        System.out.println(indent + "+- " + no.getElement());
+        indent += last ? "   " : "|  ";
+                
+        Iterator itr = inOrder(no);
+        while(itr.hasNext()){
+            NodeBT n = (NodeBT)itr.next();
+            printTree(n, indent, itr.hasNext());
         }
-        
-        String str = "";
-        
-        for (i = 0; i < h; i++){
-            for (int j = 0; j < l; j++) {
-                str += matrix[i][j] == null ? "  " : ((int) matrix[i][j] >= 0 ? " " + matrix[i][j] : matrix[i][j]);
-            }
-            str += "\n";
-        }
-        
-        return str;
-    } 
-       
+    }
+     
     
 }
