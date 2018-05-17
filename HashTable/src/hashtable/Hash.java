@@ -10,15 +10,15 @@ package hashtable;
  * @author lavinia
  */
 public class Hash {
-    private Object key;
+    private Integer key;
     private Object element;
     
-    public Hash(Object key, Object element){
+    public Hash(Integer key, Object element){
         this.key = key;
         this.element = element;
     }
 
-    public Object getKey() {
+    public Integer getKey() {
         return key;
     }
 
