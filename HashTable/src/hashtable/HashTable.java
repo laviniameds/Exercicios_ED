@@ -15,4 +15,21 @@ public class HashTable {
     public HashTable(int tam){
         table = new Object[tam];
     }
+    
+    public void put(Object key, Object element){
+        
+    }
+    
+    public Object find(Object key){
+        
+    }
+    
+    public Object remove(Object key){
+        
+    }
+    
+    @Override
+    public String toString(){
+        
+    }
 }
