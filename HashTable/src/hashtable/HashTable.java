@@ -81,6 +81,12 @@ public class HashTable {
     
     @Override
     public String toString(){
-        
+        String str = "\n";
+        for(int x = 0; x<tam; x++){
+            if(table[x] != null && table[x].getElement() != AVAILABLE)
+                str += "Chave: " + table[x].getKey() + " - Valor: " + table[x].getElement();
+            str += "\n";
+        }
+        return str;
     }
 }
