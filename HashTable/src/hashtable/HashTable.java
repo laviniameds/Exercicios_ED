@@ -13,12 +13,13 @@ public class HashTable {
     Hash[] table;
     int i, p, size;
     Object NO_SUCH_KEY = "Nenhuma chave encontrada!";
+    Object AVAIABLE = "Disponível";
     
     public HashTable(int tam){
         table = new Hash[tam];
     }
     
-    public void put(Object key, Object element){
+    public void put(int key, Object element){
         
     }
     
@@ -38,8 +39,13 @@ public class HashTable {
         return NO_SUCH_KEY;
     }
     
-    public Object remove(Object key){
+    public Object remove(int key){
+        Object o = find(key);
         
+        if(o != NO_SUCH_KEY)          
+            table[key].setElement(AVAIABLE);
+        
+        return o;
     }
     
     @Override
