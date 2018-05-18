@@ -15,26 +15,23 @@ public class Main {
      * @param args the command line arguments
      */
     public static void main(String[] args) throws Exception {
-        HashTable table = new HashTable(20);
+        HashTable table = new HashTable(23, 7);
         
-        table.put(5, "lavinia");
-        table.put(9, "opaa");
-        
-        table.Mostrar();
-        
-        table.remove(5);
+        table.insertElement(50, "lavinia");
+        table.insertElement(68, "mvdsnavndf");
+        table.insertElement(500, "opaa");
         
         table.Mostrar();
         
-        table.put(5, "nossa");
+        table.remove(500);
+        
+        table.Mostrar();       
+        
+        table.insertElement(86, "eae");
         
         table.Mostrar();
         
-        table.put(5, "eae");
-        
-        table.Mostrar();
-        
-        System.out.println(table.find(9));
+        System.out.println("\n\n" + table.find(50));
     }
     
 }

@@ -14,28 +14,38 @@ public class HashTable {
     Hash[] table;
     
     //variaveis auxiliares
-    int i, p, size, tam;
+    int i, p, size, tam, primo;
     Object NO_SUCH_KEY = "Nenhuma chave encontrada!";
     Object AVAILABLE = "Disponível";
     
-    public HashTable(int tam){
+    public HashTable(int tam, int primo){
         //cria a table com os espaços para chaves
         table = new Hash[tam];
         this.tam = tam;
         size = 0;
+        this.primo = primo;
         
         for(int x = 0;x<tam;x++)
             table[x] = new Hash(null, null);
     }
     
-    public void put(int key, Object element) throws Exception{
+    private int doubleHash(int key){
+        return primo - key % primo;
+    }
+    
+    public void insertElement(int key, Object element) throws Exception{
+        int hash = key % tam;
+        put(key, hash, element);     
+    }
+    
+    private void put(int key, int hash, Object element) throws Exception{
         if(size == tam)
             throw new Exception("Tabela cheia!");
         
-        i = key;
+        int d = doubleHash(key);
         p = 0;
         while(p != tam){
-
+            i = (hash + p * d)%tam;
             if(table[i].getKey() == null || table[i].getElement() == AVAILABLE){
                 table[i].setKey(key);
                 table[i].setElement(element);
@@ -50,8 +60,9 @@ public class HashTable {
     }
     
     public Object find(int key){
+        int hash = key%tam;
         //variavel q percorre o array
-        i = key;
+        i = hash;
         //variavel auxiliar para nao deixar que o array seja percorrido mais de uma vez
         p = 0;
         //enquanto o array nao for percorrido 
@@ -72,12 +83,13 @@ public class HashTable {
     }
     
     public Object remove(int key){
+        int hash = key%tam;
         //pega o objeto
         Object o = find(key);
         
         //se existir objeto, substitui o elemento por AVAIABLE, diminui o tamanho
         if(o != NO_SUCH_KEY)          
-            table[key].setElement(AVAILABLE);
+            table[hash].setElement(AVAILABLE);
         size--;
         
         //retorna o objeto substituído ou NO_SUCH_KEY
@@ -85,10 +97,10 @@ public class HashTable {
     }
 
     public void Mostrar(){
+        System.out.println("\n\n\n");
         for(int x = 0; x<tam; x++){
             if(table[x].getKey() != null && table[x].getElement() !=  AVAILABLE)
-                System.out.println("Chave: " + table[x].getKey() + " - Valor: " + table[x].getElement());
+                System.out.println("Hash: " + x  + " - Chave: " + table[x].getKey() + " - Valor: " + table[x].getElement());
         }
-        System.out.println(size);
     }
 }
