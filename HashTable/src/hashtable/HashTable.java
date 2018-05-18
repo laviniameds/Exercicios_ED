@@ -21,19 +21,24 @@ public class HashTable {
     public HashTable(int tam){
         //cria a table com os espaços para chaves
         table = new Hash[tam];
+        this.tam = tam;
         size = 0;
+        
+        for(int x = 0;x<tam;x++)
+            table[x] = new Hash(null, null);
     }
     
     public void put(int key, Object element) throws Exception{
         if(size == tam)
             throw new Exception("Tabela cheia!");
         
-        i = table[key].getKey();
+        i = key;
         p = 0;
-        while(p != size){
+        while(p != tam){
 
-            if(table[key] == null || table[key].getElement() == AVAILABLE){
-                table[key] = new Hash(key, element);
+            if(table[i].getKey() == null || table[i].getElement() == AVAILABLE){
+                table[i].setKey(key);
+                table[i].setElement(element);
                 size++;
                 break;
             }            
@@ -46,17 +51,17 @@ public class HashTable {
     
     public Object find(int key){
         //variavel q percorre o array
-        i = table[key].getKey();
+        i = key;
         //variavel auxiliar para nao deixar que o array seja percorrido mais de uma vez
         p = 0;
         //enquanto o array nao for percorrido 
-        while(p != size){
+        while(p != tam){
             //percorreu todo o array e nao achou a chave, para e retorna
-            if(table[key] == null)
+            if(table[i].getKey() == null)
                 return NO_SUCH_KEY;
             //achou a chave, retorna o elemento
-            else if(i == key)
-                return table[key].getElement();
+            else if(table[i].getKey() == key)
+                return table[i].getElement();
             //nao achou a chave e o array n foi percorrido todo ainda, vai pro proximo espaço, aumenta a variavel auxiliar p
             else{
                 i = (i + 1) % tam;
@@ -78,15 +83,12 @@ public class HashTable {
         //retorna o objeto substituído ou NO_SUCH_KEY
         return o;
     }
-    
-    @Override
-    public String toString(){
-        String str = "\n";
+
+    public void Mostrar(){
         for(int x = 0; x<tam; x++){
-            if(table[x] != null && table[x].getElement() != AVAILABLE)
-                str += "Chave: " + table[x].getKey() + " - Valor: " + table[x].getElement();
-            str += "\n";
+            if(table[x].getKey() != null && table[x].getElement() !=  AVAILABLE)
+                System.out.println("Chave: " + table[x].getKey() + " - Valor: " + table[x].getElement());
         }
-        return str;
+        System.out.println(size);
     }
 }

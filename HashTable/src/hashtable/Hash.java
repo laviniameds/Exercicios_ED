@@ -29,5 +29,9 @@ public class Hash {
     public void setElement(Object element) {
         this.element = element;
     }
+
+    public void setKey(Integer key) {
+        this.key = key;
+    }
         
 }
