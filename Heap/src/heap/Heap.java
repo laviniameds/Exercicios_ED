@@ -15,7 +15,6 @@ public class Heap{
     
     private NodeBT[] array;
     private int size;
-    //private int lastindex;
     
     public Heap(int key, Object o, int tam){
         array = new NodeBT[tam];
@@ -27,11 +26,6 @@ public class Heap{
     public void insert(int key, Object o){
         NodeBT parent = array[getIndexParent(++size)];
         NodeBT no = new NodeBT(key, o, parent);
-        
-        if(no.getKey() > no.getParent().getKey())
-            no.getParent().setLeft(no);       
-        else
-            no.getParent().setRight(no);
 
         array[size] = no;
         upHeap(key, size);
@@ -67,50 +61,84 @@ public class Heap{
     private Object remmoveMin(){
         NodeBT aux = array[1];
         array[1] = array[size];
+        array[1].setParent(null);
         array[size] = null;
         size--;
-        downHeap(aux.getKey(), 1);
-        return aux.getElement();
+        downHeap();
+        return aux.getKey();
+    }
+    
+    private void swap(int index1, int index2) {
+        NodeBT no = array[index1];
+        array[index1] = array[index2];
+        array[index2] = no;
     }
     
     private void upHeap(int key, int index){
 
         while(index > 1){
-            if(key < array[index].getParent().getKey()){
-              //pega o pai do novo nó
-              NodeBT aux = array[getIndexParent(index)];
-
-              //pega o novo nó e coloca o seu pai como o pai do seu antigo pai
-              array[index].setParent(aux.getParent());
-
-              //pega o nó antigo e aponta pro sue novo lugar
-              array[getIndexParent(index)] = array[index];
-              array[index] = aux;           
-              aux.setParent(array[index]); 
-            }
+            if(key < array[getIndexParent(index)].getKey())
+                swap(index, getIndexParent(index));           
             index = getIndexParent(index);
         }  
         
     }
     
-    private void downHeap(int key, int index){
-       while(index < size){
-           if(key > array[index+1].getKey()){
-               NodeBT aux = array[index];
-               array[index].setParent(aux.getParent());
-               
-               array[index] = array[index+1];
-               array[index+1] = aux;
-               aux.setParent(array[index]);
-           }
-           index++;
-       } 
+    private void downHeap(){
+        int index = 1;
+        while (index <= size) {
+            if (hasLeft(index) && hasRight(index)) {
+                if (array[leftIndex(index)].getKey() < array[index].getKey() && array[rightIndex(index)].getKey() < array[index].getKey()) {
+                    if (array[rightIndex(index)].getKey() < array[leftIndex(index)].getKey()) {
+                        swap(index, rightIndex(index));
+                        index = rightIndex(index);
+                    } else {
+                        swap(index, leftIndex(index));
+                        index = leftIndex(index);
+                    }
+                    continue;
+                } else if (array[leftIndex(index)].getKey() < array[index].getKey()) {
+                    swap(index, leftIndex(index));
+                    index = leftIndex(index);
+                    continue;
+                } else if (array[rightIndex(index)].getKey() < array[index].getKey()) {
+                    swap(index, rightIndex(index));
+                    index = rightIndex(index);
+                    continue;
+                }
+            } else if (hasLeft(index) && array[leftIndex(index)].getKey() < array[index].getKey()) {
+                swap(index, leftIndex(index));
+                index = leftIndex(index);
+                continue;
+            } else if (hasRight(index) && array[rightIndex(index)].getKey() < array[index].getKey()) {
+                swap(index, rightIndex(index));
+                index = rightIndex(index);
+                continue;
+            }
+            break;
+        }
     }
     
-    private int getIndexParent(int i){
-        if(i % 2 == 0)
-            return i/2;
+    private boolean hasLeft(int index) {
+        return !(leftIndex(index) > size || array[leftIndex(index)] == null);
+    }
+
+    private boolean hasRight(int index) {
+        return !(rightIndex(index) > size || array[rightIndex(index)] == null);
+    }
+    
+    private int leftIndex(int index) {
+        return index * 2;
+    }
+
+    private int rightIndex(int index) {
+        return (index * 2) + 1;
+    }
+    
+    private int getIndexParent(int index){
+        if(index % 2 == 0)
+            return index/2;
         else
-            return (i-1)/2;
+            return (index-1)/2;
     }
 }
