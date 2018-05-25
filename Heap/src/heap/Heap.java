@@ -15,29 +15,28 @@ public class Heap{
     
     private NodeBT[] array;
     private int size = 1;
-    private int lastindex;
+    //private int lastindex;
     
     public Heap(int key, Object o, int tam){
         array = new NodeBT[tam];
-        array[0] = new NodeBT(0, size, null);
+        array[0] = new NodeBT(size, size, null);
         array[1] = new NodeBT(key, o, null);
     }
 
     public void insert(int key, Object o){
-        NodeBT no = inserir(key);
+        NodeBT parent = array[getIndexParent(++size)];
+        NodeBT no = new NodeBT(key, o, parent);
         
         if(no.getKey() > no.getParent().getKey())
             no.getParent().setLeft(no);       
         else
             no.getParent().setRight(no);
-        
-        no.setElement(o);
-        size++;
-        
-        upHeap(key, lastindex);
+
+        array[size] = no;
+        upHeap(key, size);
     }
     
-    private NodeBT inserir(int key) {
+    /*private NodeBT inserir(int key) {
         
         lastindex = 1;
         int indexParent = 1;
@@ -53,9 +52,9 @@ public class Heap{
             }
             else if (key > array[lastindex].getKey())
                 indexParent = lastindex;
-                lastindex= (2 * lastindex);           
+                lastindex = (2 * lastindex);           
         }
-    }
+    }*/
         
     /*public Object removeMin(int key){
         
@@ -69,16 +68,23 @@ public class Heap{
     }
     
     private void upHeap(int key, int index){
-        while(key < array[index].getParent().getKey() || index >= 1){            
-            NodeBT aux = array[getIndexParent(index)];            
-            array[getIndexParent(index)] = array[index];
-            array[index] = aux;
-            
-            array[index].setParent(aux.getParent());
-            aux.setParent(array[index]);
-            
+
+        while(index > 1){
+            if(key < array[index].getParent().getKey()){
+              //pega o pai do novo nó
+              NodeBT aux = array[getIndexParent(index)];
+
+              //pega o novo nó e coloca o seu pai como o pai do seu antigo pai
+              array[index].setParent(aux.getParent());
+
+              //pega o nó antigo e aponta pro sue novo lugar
+              array[getIndexParent(index)] = array[index];
+              array[index] = aux;           
+              aux.setParent(array[index]); 
+            }
             index = getIndexParent(index);
-        }
+        }  
+        
     }
     
     /*private void downHeap(){
@@ -86,7 +92,7 @@ public class Heap{
     }*/
     
     public Object min(){
-       return array[lastindex].getElement(); 
+       return array[1].getElement(); 
     }
     
     public int size(){
@@ -101,9 +107,8 @@ public class Heap{
         System.out.println(size());
         for(int i = 1;i<array.length;i++){
             if(array[i] != null){
-                System.out.println("Key: " +array[i].getKey() + " Element: " + array[i].getElement());
+                System.out.println("index: " + i +" Key: " +array[i].getKey() + " Element: " + array[i].getElement());
             }
         }
-        System.out.println(array[1].getLeft().getElement());
     }
 }

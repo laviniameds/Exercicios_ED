@@ -15,10 +15,12 @@ import interfaces.InvalidPositionException;
 public class Main {
     
     public static void main(String[] args) throws InvalidPositionException{
-        Heap heap = new Heap(5, "oi eu sou o root", 20);
+        Heap heap = new Heap(5, "oi eu sou antigo root", 20);
         
-        heap.insert(3, "sou o filho direito");
-        heap.insert(8, "sou o filho esquerdo");
+        heap.insert(8, "topper");
+        heap.insert(15, "vkevefe");
+        heap.insert(10, "epaa");
+        heap.insert(1, "root novo");
         
         heap.mostrar();
     }
