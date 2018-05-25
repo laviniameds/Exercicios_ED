@@ -14,13 +14,14 @@ import binary.NodeBT;
 public class Heap{
     
     private NodeBT[] array;
-    private int size = 1;
+    private int size;
     //private int lastindex;
     
     public Heap(int key, Object o, int tam){
         array = new NodeBT[tam];
         array[0] = new NodeBT(size, size, null);
         array[1] = new NodeBT(key, o, null);
+        size = 1;
     }
 
     public void insert(int key, Object o){
@@ -36,35 +37,40 @@ public class Heap{
         upHeap(key, size);
     }
     
-    /*private NodeBT inserir(int key) {
-        
-        lastindex = 1;
-        int indexParent = 1;
-        
-        while(true){
-            if (array[lastindex] == null){
-                array[lastindex] = new NodeBT(key, null, array[indexParent]);
-                return array[lastindex];
-            } 
-            else if (key < array[lastindex].getKey()){
-                indexParent = lastindex;
-                lastindex = (2 * lastindex + 1); 
-            }
-            else if (key > array[lastindex].getKey())
-                indexParent = lastindex;
-                lastindex = (2 * lastindex);           
+    public void heapSort(){
+        while(size != 0){
+            System.out.print(remmoveMin() + " ");
         }
-    }*/
-        
-    /*public Object removeMin(int key){
-        
-    }*/
+    }
     
-    private int getIndexParent(int i){
-        if(i % 2 == 0)
-            return i/2;
-        else
-            return (i-1)/2;
+    public Object min(){
+       return array[1].getElement(); 
+    }
+    
+    public int size(){
+        return size;
+    }
+    
+    public boolean isEmpty(){
+        return size == 0;
+    }
+    
+    public void mostrar(){
+        System.out.println(size());
+        for(int i = 1;i<array.length;i++){
+            if(array[i] != null){
+                System.out.println("index: " + i +" Key: " +array[i].getKey() + " Element: " + array[i].getElement());
+            }
+        }
+    }
+    
+    private Object remmoveMin(){
+        NodeBT aux = array[1];
+        array[1] = array[size];
+        array[size] = null;
+        size--;
+        downHeap(aux.getKey(), 1);
+        return aux.getElement();
     }
     
     private void upHeap(int key, int index){
@@ -87,28 +93,24 @@ public class Heap{
         
     }
     
-    /*private void downHeap(){
-        
-    }*/
-    
-    public Object min(){
-       return array[1].getElement(); 
+    private void downHeap(int key, int index){
+       while(index < size){
+           if(key > array[index+1].getKey()){
+               NodeBT aux = array[index];
+               array[index].setParent(aux.getParent());
+               
+               array[index] = array[index+1];
+               array[index+1] = aux;
+               aux.setParent(array[index]);
+           }
+           index++;
+       } 
     }
     
-    public int size(){
-        return size;
-    }
-    
-    public boolean isEmpty(){
-        return false;
-    }
-    
-    public void mostrar(){
-        System.out.println(size());
-        for(int i = 1;i<array.length;i++){
-            if(array[i] != null){
-                System.out.println("index: " + i +" Key: " +array[i].getKey() + " Element: " + array[i].getElement());
-            }
-        }
+    private int getIndexParent(int i){
+        if(i % 2 == 0)
+            return i/2;
+        else
+            return (i-1)/2;
     }
 }

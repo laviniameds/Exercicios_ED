@@ -15,14 +15,16 @@ import interfaces.InvalidPositionException;
 public class Main {
     
     public static void main(String[] args) throws InvalidPositionException{
-        Heap heap = new Heap(5, "oi eu sou antigo root", 20);
+        Heap heap = new Heap(5, "5", 20);
         
-        heap.insert(8, "topper");
-        heap.insert(15, "vkevefe");
-        heap.insert(10, "epaa");
-        heap.insert(1, "root novo");
+        heap.insert(9, "9");
+        heap.insert(2, "2");
+        heap.insert(6, "6");
+        heap.insert(7, "7");
+        heap.insert(1, "1");
         
-        heap.mostrar();
+        //heap.mostrar();
+        heap.heapSort();
     }
       
 }
