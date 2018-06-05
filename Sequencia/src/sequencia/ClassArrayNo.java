@@ -1,3 +1,5 @@
+package sequencia;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -8,7 +10,7 @@
  *
  * @author lavinia
  */
-public class ClassArrayNo {
+public class ClassArrayNo implements Comparable<ClassArrayNo>{
     private int indice;
     private Object elemento;
 
@@ -27,6 +29,16 @@ public class ClassArrayNo {
     public void setElemento(Object elemento) {
         this.elemento = elemento;
     }
-    
-    
+
+    @Override
+    public int compareTo(ClassArrayNo no) {
+        if(Integer.parseInt(this.getElemento().toString()) < Integer.parseInt(no.getElemento().toString()))
+            return -1;
+        else if(Integer.parseInt(this.getElemento().toString()) == Integer.parseInt(no.getElemento().toString()))
+            return 0;
+        else
+            return 1;
+    }
+
+
 }

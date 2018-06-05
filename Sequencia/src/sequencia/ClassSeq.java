@@ -1,3 +1,8 @@
+package sequencia;
+
+
+import java.util.Random;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -37,7 +42,7 @@ public class ClassSeq implements ISeq{
 
     @Override
     public boolean isEmpty() {
-        return (t == -1);
+        return (t < 0);
     }
 
     @Override
@@ -77,26 +82,26 @@ public class ClassSeq implements ISeq{
     }
 
     @Override
-    public Object removeAtRank(int r) {
-        Object aux = arrayNos[r].getElemento();
+    public ClassArrayNo removeAtRank(int r) {
+        ClassArrayNo aux = arrayNos[r];
         
         for(int i = r;i < size()-1; i++){
             arrayNos[i] = arrayNos[i+1];
-            arrayNos[i].setIndice(i+1);
-        }                  
+            arrayNos[i].setIndice(i);
+        }
         
         t--;
         return aux;
     }
 
     @Override
-    public Object first() {
-        return atRank(0).getElemento();
+    public ClassArrayNo first() {
+        return atRank(0);
     }
 
     @Override
-    public Object last() {
-        return atRank(t).getElemento();
+    public ClassArrayNo last() {
+        return atRank(t);
     }
 
     @Override
@@ -153,7 +158,7 @@ public class ClassSeq implements ISeq{
     }
 
     @Override
-    public Object remove(ClassArrayNo n) {
+    public ClassArrayNo remove(ClassArrayNo n) {
        return removeAtRank(rankOf(n));
     }
 
@@ -169,5 +174,87 @@ public class ClassSeq implements ISeq{
                 return no.getIndice();
         }
         return -1;
+    }
+    
+    public ClassSeq QuickSort(){
+        Random r = new Random();
+        int Low = 0;
+        int High = this.size();
+        int p = r.nextInt(High-Low) + Low;
+        System.out.println("p: " + p);
+        
+        return quickSort(this, p);
+    }
+    
+    private ClassSeq quickSort(ClassSeq S, int p){
+        ClassSeq L = new ClassSeq(S.size()), E = new ClassSeq(S.size()), G = new ClassSeq(S.size());
+        
+        ClassArrayNo x = S.atRank(p);       
+        while(!S.isEmpty()){
+            ClassArrayNo y = S.remove(S.first());
+            
+            switch (y.compareTo(x)) {
+                case -1:
+                    L.insertLast(y.getElemento());
+                    break;
+                case 0:
+                    E.insertLast(y.getElemento());           
+                    break;
+                case 1:
+                    G.insertLast(y.getElemento());
+                    break;
+            }
+        }
+        return join(L, E, G);
+    }
+    
+    private ClassSeq order(ClassSeq vetor, int inicio, int fim){
+        
+        int i, j, meio;
+        ClassArrayNo aux;
+        i = inicio;
+        j = fim;
+        meio = inicio+(fim-inicio)/2;
+
+        while(i <= j)
+        {
+           while(vetor.arrayNos[i].compareTo(vetor.arrayNos[meio]) == -1)
+              i++;
+           while(vetor.arrayNos[j].compareTo(vetor.arrayNos[meio]) == 1)
+              j--;
+           if(i <= j)
+           {
+              aux = vetor.arrayNos[i];
+              vetor.arrayNos[i] = vetor.arrayNos[j];
+              vetor.arrayNos[i].setIndice(aux.getIndice());
+              vetor.arrayNos[j] = aux;
+              vetor.arrayNos[j].setIndice(j);
+              i++;
+              j--;
+           }
+        }
+        if(inicio < j)
+           order(vetor, inicio, j);
+        if(i < fim)
+           order(vetor, i, fim);
+        
+        return vetor;
+    }
+    
+    private ClassSeq join(ClassSeq L, ClassSeq E, ClassSeq G){
+        
+        if(!L.isEmpty())
+            L = order(L, L.rankOf(L.first()), L.rankOf(L.last()));
+        if(!G.isEmpty())
+            G = order(G, G.rankOf(G.first()), G.rankOf(G.last()));
+        
+        while(!E.isEmpty())
+            L.insertLast(E.remove(E.first()).getElemento());
+        while(!G.isEmpty())
+            L.insertLast(G.remove(G.first()).getElemento());
+        
+        E = null;
+        G = null;
+        return L;
     }
 }

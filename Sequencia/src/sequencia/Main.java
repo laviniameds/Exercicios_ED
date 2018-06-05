@@ -1,3 +1,5 @@
+package sequencia;
+
 
 import java.util.Scanner;
 
@@ -12,7 +14,7 @@ import java.util.Scanner;
  * @author lavinia
  */
 public class Main {
-    public static void exibirSeq(ClassSeq sequencia, int size){
+    private static void exibirSeq(ClassSeq sequencia, int size){
         System.out.print("\nSequencia: \n");
         
         for(int i = 0; i < size; i++)
@@ -22,7 +24,7 @@ public class Main {
         System.out.print("\n");  
     }
     
-    public static void main(String args[]){
+/*    private static void teste(){
         Scanner sc = new Scanner(System.in);
         int tamanho, x = -1, rank, rank2;
         Object obj;
@@ -71,10 +73,10 @@ public class Main {
                     exibirSeq(sequencia, sequencia.size());
                     break;                                                                                 
                 case 7:
-                    System.out.println("primeiro: " + sequencia.first());
+                    System.out.println("primeiro: " + sequencia.first().getElemento());
                     break;                           
                 case 8:
-                    System.out.println("ultimo: " + sequencia.last());
+                    System.out.println("ultimo: " + sequencia.last().getElemento());
                     break;                            
                 case 9:
                     rank = sc.nextInt();
@@ -127,5 +129,24 @@ public class Main {
                     break;
             }
         }
+    }*/
+    
+    public static void main(String args[]){
+        ClassSeq S = new ClassSeq(20);
+        
+        S.insertLast(5);
+        S.insertLast(54);
+        S.insertLast(21);
+        S.insertLast(2);
+        S.insertLast(96);
+        S.insertLast(14);
+        S.insertLast(7);
+        S.insertLast(6);
+        
+        exibirSeq(S, S.size());
+        
+        S = S.QuickSort();
+        
+        exibirSeq(S, S.size());
     }
 }
