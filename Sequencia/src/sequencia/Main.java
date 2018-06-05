@@ -142,6 +142,9 @@ public class Main {
         S.insertLast(14);
         S.insertLast(7);
         S.insertLast(6);
+        S.insertLast(42);
+        S.insertLast(78);
+        S.insertLast(61);
         
         exibirSeq(S, S.size());
         

@@ -177,10 +177,7 @@ public class ClassSeq implements ISeq{
     }
     
     public ClassSeq QuickSort(){
-        Random r = new Random();
-        int Low = 0;
-        int High = this.size();
-        int p = r.nextInt(High-Low) + Low;
+        int p = (int)Math.floor(Math.random()*this.size());
         System.out.println("p: " + p);
         
         return quickSort(this, p);
@@ -208,13 +205,30 @@ public class ClassSeq implements ISeq{
         return join(L, E, G);
     }
     
+    private ClassSeq join(ClassSeq L, ClassSeq E, ClassSeq G){
+        
+        if(!L.isEmpty())
+            L = order(L, L.rankOf(L.first()), L.rankOf(L.last()));
+        if(!G.isEmpty())
+            G = order(G, G.rankOf(G.first()), G.rankOf(G.last()));
+        
+        while(!E.isEmpty())
+            L.insertLast(E.remove(E.first()).getElemento());
+        while(!G.isEmpty())
+            L.insertLast(G.remove(G.first()).getElemento());
+        
+        E = null;
+        G = null;
+        return L;
+    }
+    
     private ClassSeq order(ClassSeq vetor, int inicio, int fim){
         
         int i, j, meio;
         ClassArrayNo aux;
         i = inicio;
         j = fim;
-        meio = inicio+(fim-inicio)/2;
+        meio = (int)Math.floor(Math.random()*vetor.size());
 
         while(i <= j)
         {
@@ -239,22 +253,6 @@ public class ClassSeq implements ISeq{
            order(vetor, i, fim);
         
         return vetor;
-    }
-    
-    private ClassSeq join(ClassSeq L, ClassSeq E, ClassSeq G){
-        
-        if(!L.isEmpty())
-            L = order(L, L.rankOf(L.first()), L.rankOf(L.last()));
-        if(!G.isEmpty())
-            G = order(G, G.rankOf(G.first()), G.rankOf(G.last()));
-        
-        while(!E.isEmpty())
-            L.insertLast(E.remove(E.first()).getElemento());
-        while(!G.isEmpty())
-            L.insertLast(G.remove(G.first()).getElemento());
-        
-        E = null;
-        G = null;
-        return L;
-    }
+    }    
+
 }
