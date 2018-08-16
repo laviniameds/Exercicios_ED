@@ -209,7 +209,7 @@ public class ClassBT implements BinaryTree{
         }
 
     @Override
-    public Object remove(int key) throws InvalidPositionException {
+    public Object remover(int key) throws InvalidPositionException {
         if( isEmpty()){
             throw new InvalidPositionException("Ávore vazia");
         }
@@ -254,7 +254,7 @@ public class ClassBT implements BinaryTree{
                 passer = passer.getLeft();
         
         int auxKey = passer.getKey();
-        remove(auxKey);
+        remover(auxKey);
         node.setKey(auxKey);
         size--;
         return node;
